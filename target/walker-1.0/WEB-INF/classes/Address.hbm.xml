@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 13, 2014 11:36:02 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.application.walker.service.Address" table="address" catalog="walker">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="addressLine1" type="string">
+            <column name="address_line1" length="45" />
+        </property>
+        <property name="addressLine2" type="string">
+            <column name="address_line2" length="45" />
+        </property>
+        <property name="addressLine3" type="string">
+            <column name="address_line3" length="45" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="45" />
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="45" />
+        </property>
+        <property name="zipcode" type="java.lang.Integer">
+            <column name="zipcode" />
+        </property>
+        <set name="users" table="user" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="address_id" not-null="true" />
+            </key>
+            <one-to-many class="com.application.walker.service.User" />
+        </set>
+    </class>
+</hibernate-mapping>

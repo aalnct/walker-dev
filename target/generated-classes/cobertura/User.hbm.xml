@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 13, 2014 11:36:02 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.application.walker.service.User" table="user" catalog="walker">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="address" class="com.application.walker.service.Address" fetch="select">
+            <column name="address_id" not-null="true" />
+        </many-to-one>
+        <property name="firstName" type="string">
+            <column name="first_name" length="45" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="45" />
+        </property>
+        <property name="username" type="string">
+            <column name="username" length="45" not-null="true" />
+        </property>
+        <property name="dob" type="string">
+            <column name="dob" length="45" />
+        </property>
+        <property name="emailAddress" type="string">
+            <column name="email_address" length="45" not-null="true" />
+        </property>
+        <one-to-one name="creditcard" class="com.application.walker.service.Creditcard"></one-to-one>
+    </class>
+</hibernate-mapping>

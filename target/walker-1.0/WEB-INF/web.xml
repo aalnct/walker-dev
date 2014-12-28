@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>walker</display-name>
+  <welcome-file-list>
+    <welcome-file>CreateUser.jsp</welcome-file>
+  </welcome-file-list>
+
+	<display-name>walker Application</display-name>
+
+<listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/walker-servlet.xml,
+			/WEB-INF/classes/applicationcontext.xml,
+			/WEB-INF/classes/Address.hbm.xml,
+			/WEB-INF/classes/User.hbm.xml,
+			/WEB-INF/classes/Creditcard.hbm.xml
+		</param-value>
+	</context-param>
+
+  <servlet>
+ 	<servlet-name>walker</servlet-name>
+  		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+
+	<!-- Map all requests to the DispatcherServlet for handling -->
+	<servlet-mapping>
+		<servlet-name>walker</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+  
+</web-app>
