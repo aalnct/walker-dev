@@ -1,30 +1,26 @@
 package com.application.walker.controller;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-//Will handle dispatched request coming from login page
-import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.web.servlet.ModelAndView;
 import com.application.walker.dao.WalkerDAOOperations;
 import com.application.walker.service.User;
 import com.application.walker.service.WalkerService;
 
 @Controller
-@RequestMapping(value= {"/" , "general_user","/walker"})
+@RequestMapping(value= {"/" , "general_user","/walker/"})
 public class LoginController{
 	
 	@Autowired
@@ -56,42 +52,50 @@ public class LoginController{
 		return model;
 	}
 	
-	@RequestMapping(value= "/searchuser/{username}/{lastname}", params = "admin", method = RequestMethod.POST)
+	@RequestMapping(value= "/searchuser/", params = "admin", method = RequestMethod.POST)
 	private ModelAndView loginSuccessfull(@RequestParam String username, @RequestParam String lastname, HttpServletRequest request ){
 		ModelAndView model = new ModelAndView("searchuser");
+		String message = null;
 		User user = getWalkerService().loginUser(username,lastname);
 		if(user == null){
-			String message = "User Record not found";
+			message = "User Record not found";
 			model.addObject("messages", message);
 			model.setViewName("admin");
 		}
+		String user1 = user.getUsername();
+		model.addObject("messages", user1);
 		model.setViewName("searchuser");
+		
 		return model;
 	}
 	
-	
-	
-	
-	@SuppressWarnings("rawtypes")
-	
-//	private ModelAndView retrieveInformation(@RequestParam String username, HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException{
-	@RequestMapping(value= "/userinformation",method=RequestMethod.POST)
-	private ModelAndView retrieveInformation(@RequestParam String username, @RequestParam String lastname, @RequestParam String emailid, HttpServletRequest request,
+	@RequestMapping(value= "/userinformation",method= {RequestMethod.POST,RequestMethod.GET})
+	private ModelAndView retrieveInformation(@RequestParam(required=false) List<String> username, @RequestParam(required=false) List<String> lastname, @RequestParam(required=false) List<String> emailid, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException{
+	
 		ModelAndView modelandview = new ModelAndView();
-		User user =getWalkerService().retireveUserbyUserName(username,lastname,emailid);
-		if(null!=user){
-		modelandview.addObject("user", user);
-		modelandview.setViewName("userinformation");
+		List<User> user =getWalkerService().retireveUserbyUserName(username,lastname,emailid);
 		
+		if(!user.isEmpty()){
+				Iterator<User> iterator = user.iterator();
+				while(iterator.hasNext()){
+					modelandview.addObject("userlist", user);
+					iterator.next();
+				}
+				boolean isPost = "POST".equals(request.getMethod());
+				if(isPost){
+					modelandview.setViewName("userinformation");
+				}else{
+					modelandview.addObject("userlist", user);
+					modelandview.setViewName("searchuser");
+				}
 		}else{
 			String message = "user does not exists";
 			modelandview.addObject("message", message);
+			
+			
 			modelandview.setViewName("searchuser");
 		}
 		return modelandview;
 	}
-
-	
 }

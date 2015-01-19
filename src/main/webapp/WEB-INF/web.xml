@@ -3,7 +3,7 @@
   <display-name>walker</display-name>
   <welcome-file-list>
     <!-- <welcome-file>CreateUser.jsp</welcome-file> -->
-    <welcome-file>login.jsp</welcome-file>
+   <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
 
 	<display-name>walker Application</display-name>

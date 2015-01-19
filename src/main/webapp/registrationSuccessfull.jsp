@@ -37,7 +37,7 @@
 			}
 			
 			</style>
-
+			
 </head>
 <body>
 		<h2 align="center">User Details</h2>
@@ -83,6 +83,7 @@
 			
 				<p  id="submitUpdatedValues" align="center">
 				<input type="submit" name="update" value="update"/>
+				<input action="action" type="button" value="Back" onclick="history.go(-1);" />
 				</p>
 </body>
 </html>

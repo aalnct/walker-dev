@@ -7,81 +7,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <title>Login Page</title>
+<link href="styles/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="styles/helper.js"></script>
+<link href="styles/login.css" rel="stylesheet" type="text/css"/>
+<!-- Theme Start -->
+<link href="styles/styles.css" rel="stylesheet" type="text/css" />
+<!-- Theme End -->
 
-			<script type="text/javascript">
-				/* function validateFields(){
-					var username = document.forms["login_form"]["username"].value;
-					var password = document.forms["login_form"]["password"].value;
-					if(username == "" || username == null || password=="" || password==null){
-						alert('enter username and/or password please');
-						return false;
-					}
-					return true;
-					} */
-				function register(){
-					window.open("http://localhost:8080/walker/CreateUser.jsp",
-							"_blank", "toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=500, height=800");
-					}
-			</script>
-			
-			
-			
-			<style>
-				#login_btn {
-					border: black;				
+
+ 			<style>
+				#register{
+					color: #ddd;
+					padding: 2px;
+					border:2px;
+					position: right;
 				}
-				
-				body{
-					background: lightblue;
-				}
+				/* data-validate1="require" */
 			</style>
-			
-			<script type="text/javascript">
-				/* alert('checkpoint'); */
-				$(function(){
-						$('form').submit(function(e){
-								var count = 0;
-								$("[data-validate='require']").each(function(){
-										if(!$(this).val()){
-											count++;
-											$(this).after($('<div/>')).attr({"class" : "input_error" , "id" : 'error_'
-														+$(this).attr('name')}).html('Field is required');
-											}
-										else{
-											$('#error_'+$(this).attr('name')).remove();
-											}
-									});
-								if(count > 0){
-									e.preventDefault();
-									}
-							});
-					});
-			</script>
-			
-<!-- onsubmit=" return validateFields()" -->
 </head>
 <body>
-	<p align="center"><b>Please login</b></p>
+	<div id="logincontainer">
+		<div id="loginbox">
+			<div id="loginheader">
+			<img src="styles/cp_logo_login.png" alt="Control Panel Login" />
+			</div>
+			<div id="innerlogin">
+				<form:form action="general_user" id="loginform" name="form" commandName="general_user" method="post">
+					<p>Enter your User Name:</p>
+                	<input type="text" class="logininput" />
+                	<p>Enter your Last Name:</p>
+                	<input type="password" class="logininput" />
+                	<input type="submit" class="loginbtn" name="login" value="Login"/>
+				</form:form>
+			</div>
+					<p id="register">If not a member, please
+				<a href="javascript:void(0);" rel='createuser'>Register</a></p>
+		</div>
+				<img src="styles/login_fade.png" alt="Fade" />
+	</div>
+	<p align="center"><b>Admin Please login</b></p>
 	<div id="admin">
         			<p id="admin" align="center"><a href="/walker/admin.jsp">Admin Please click here</a>.</p>
         	</div>
-	<form:form action="general_user" id="formid" name="form" commandName="general_user" method="post" >
-	
-		<table align="center" border="1" cellspacing="2">
-			<tr>
-			<th>UserName:<input type="text" data-validate="require" name="username"/></th></tr>
-			<b><p align="center">After login for first time, you will be required to reset your password</p></b>
-			<tr><th>LastName:<input type="password" data-validate="require" name="password"/></th> 
-			</tr>
-		</table>
-		</br>
-			<div id="login_btn" align="center">
-				<input type="submit" name="login" value="Open"/>
-				<input type="button" value="Register First" onclick="register()"/>
-			</div>
-			<!-- Validation Jquery -->
-			
-	</form:form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.application.walker.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 		
 		@Autowired
 		private static SessionFactory sessionFactory;
+		@Autowired
+		private static Session session;
 		
 		public static SessionFactory getSession(){
 			try{

@@ -21,9 +21,9 @@
 </script>
 
 	<style>
-		/* .none {
-	 	   display:none;
-		} */
+		th{
+			font-size: 12px;
+		}
 	</style>
 </head>
 	
@@ -35,6 +35,7 @@
 					
 					<form:form method="post" action="deleteuser">
 						<table align="center" border="2">
+						
 								<th>First Name</th>
 								<th>Last Name</th>
 								<th>UserName</th>
@@ -46,21 +47,27 @@
 								<th>City</th>
 								<th>State</th>
 								<th>Zipcode</th>
-							
-								<tr>
-									<td><c:out value="${user.firstName}"></c:out></td>
-									<td><c:out value="${user.lastName}"></c:out></td>
-									<td><c:out value="${user.username}"></c:out></td>
-									<td><c:out value="${user.emailAddress}"></c:out></td>
-									<td><c:out value="${user.dob}"></c:out></td>
-									<td><c:out value="${user.address.addressLine1}"></c:out></td>
-									<td><c:out value="${user.address.addressLine2}"></c:out></td>
-									<td><c:out value="${user.address.addressLine3}"></c:out></td>
-									<td><c:out value="${user.address.city}"></c:out></td>
-									<td><c:out value="${user.address.state}"></c:out></td>
-									<td><c:out value="${user.address.zipcode}"></c:out></td>
-								</tr>
+								<th>Actions</th>
 								
+							<c:forEach var="usersList" items="${userlist}">
+								<tr>
+									<td><c:out value="${usersList.firstName}"></c:out></td>
+									<td><c:out value="${usersList.lastName}"></c:out></td>
+									<td><c:out value="${usersList.username}"></c:out></td>
+									<td><c:out value="${usersList.emailAddress}"></c:out></td>
+									<td><c:out value="${usersList.dob}"></c:out></td>
+									<td><c:out value="${usersList.address.addressLine1}"></c:out></td>
+									<td><c:out value="${usersList.address.addressLine2}"></c:out></td>
+									<td><c:out value="${usersList.address.addressLine3}"></c:out></td>
+									<td><c:out value="${usersList.address.city}"></c:out></td>
+									<td><c:out value="${usersList.address.state}"></c:out></td>
+									<td><c:out value="${usersList.address.zipcode}"></c:out></td>
+									
+									<td><a href="javascript:void(0);"><img src="/walker/styles/icon_delete.png" alt="Delete" title="Delete"/></a>
+										<a href="javascript:void(0);">Update</a>
+									</td>
+								</tr>
+								</c:forEach>
 						</table>
 									
 									<!-- </br><input type = "radio" name ="user" value = "Create" data-id="createuser">Create New User</input>
@@ -78,6 +85,8 @@
 									
 									<!-- </br><div id="createuser" class="none"><input type="submit" name="creatinguser" value="Create User" align="top"/></div>
 									</br><div id="updateuser" class="none"><input type="submit" name="update" value="update" align="top"/></div> -->
+									
+									<!-- delete functionality -->
 									<p>If you want to delete some user information, please enter his username</p>
 									<input type="text" name="username" placeholder="delete.."></input>
 									</br><div id="deleteuser" class="none"><input type="submit" name="delete" value="Delete" align="top"/></div>

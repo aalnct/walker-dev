@@ -1,6 +1,6 @@
 package com.application.walker.service;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,14 +42,13 @@ public class WalkerService {
 		return user;
 	}
 	
-	@SuppressWarnings("rawtypes")
-//	public User retireveUserbyUserName(String userName){
-		public User retireveUserbyUserName(String username, String lastname, String emailid){
-		User user = iWalkerDAO.retrieveUser(username,lastname,emailid);
+	public List<User> retireveUserbyUserName(List<String> username, List<String> lastname, List<String> emailid){
+		List<User> user = iWalkerDAO.retrieveUser(username,lastname,emailid);
 		return user;
 	}
-	public int deletingUserInformation(String username) throws Exception {
-		int result = iWalkerDAO.deleteUser(username);
+	
+	public int deletingUserInformation(String username,User user) throws Exception {
+		int result = iWalkerDAO.deleteUser(username,user);
 		return result;
 		
 	}

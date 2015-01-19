@@ -7,62 +7,225 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.47/jquery.form-validator.min.js"></script>
-<script> $.validate(); </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<!-- <script type="text/javascript" src="styles/helper.js"></script> -->
 <title>Create User</title>
 
-	<script>
-		function validate(){
-			var validateValue = document.forms["registerationform"]["fname"].value;
-			var validateValue_lname = document.forms["registerationform"]["lname"].value;
-			var validateValue_email = document.forms["registerationform"]["emailid"].value;
-			var validateValue_dob = document.forms["registerationform"]["dob"].value;
-			var validateValue_uname = document.forms["registerationform"]["uname"].value;
-			
-			if((validateValue==null||validateValue =="") || (validateValue_lname==null||validateValue_lname =="") 
-					|| (validateValue_email==null||validateValue_email =="") || (validateValue_dob==null||validateValue_dob =="")
-					|| (validateValue_uname==null||validateValue_uname =="")){
-
-					alert("Please enter data in required field");
-				return false;
-				}
+	<style type="text/css">
+		body {
+ 				   background-color:grey;
 			}
-	</script>
-</head>
-<body>
-		<h3>Please enter your details below</h3>
-		<form:form action="user" method="post" name="registerationform" commandName="user" onsubmit=" return validate()">
-			<table align="center" border="1" cellspacing="2" bgcolor="green">
-				<tr>
-				<th>First Name<input type="text" name="fname" maxlength="10" placeholder="Please enter your first name"/></th>
-				</tr>
-				
-				<tr>
-				<th>Last Name<input type="text" name="lname" maxlength="15" placeholder="Please enter your last name"/></th>
-				</tr>
-				
-				<tr>
-				<th>Email ID<input type="text" name="emailid" maxlength="20" placeholder="Please enter your email id"/></th>
-				</tr>
-				
-				<tr>
-				<th>Date of Birth<input type="text" name="dob" maxlength="20" placeholder="Please enter your date of Birth"/></th>
-				</tr>
-				
-				<tr>
-				<th>UserName<input type="text" name="uname" maxlength="10" placeholder="Please enter your Username"/></th>
-				</tr>
-				
-				<tr align="left">
-				<th><input type="submit" name="submit" value="Register"/></th>
-				<th><input type="reset" name="reset" value="Reset"/></th>
-				</tr>
-			</table>
 			
-			<div class="fieldgroup">
-            <p>Already registered? <a href="login.jsp">Sign in</a>.</p>
-        </div>
+			fieldset > label {
+				float:left;
+				width:250px;
+			}
+			fieldset{
+				font: italic;
+				font-family: fantasy;
+				background-position: left;
+				border-width: thick;
+				float: left;
+			}
+					admin{
+						font: italic;
+						font-family: fantasy;
+						background-position: 90% 00%;
+						border-width: thick;
+						float: left;
+    				}
+    				table th{
+    					width: 300px;
+    				}
+		</style>
+		
+		<script>
+  			$(function() {
+    			$( "#datepicker" ).datepicker({
+  			      numberOfMonths: 3,
+  			      showButtonPanel: true
+  			    });
+  			    //for tooltip
+    			 $( document ).tooltip();  		
+					//for dropdown
+    			 $("select[name=list_country]").change(function(){
+ 					if($(this).val() == "india"){
+ 						$("select[name=list_state_india]").show();
+ 						$("select[name=list_state_usa]").hide();
+ 					}if($(this).val() == "usa"){
+ 						$("select[name=list_state_usa]").show();
+ 						$("select[name=list_state_india]").hide();
+ 					}
+ 					if($(this).val() == "country"){
+ 						$("select[name=list_state_usa]").hide();
+ 						$("select[name=list_state_india]").hide();
+ 					}
+ 				});	 
+					//$('form[name=registerationform]').submit(function(){
+   				   $('#registerationform').submit(function(){
+   	   				   		var count=0;
+   	   				   		$('#registerationform [data-validate^="require"]').each(function(){
+   	   	   				   			var validate =$(this).attr('data-validate').split('|');
+   	   	   				   			//alert('hi');
+   	   	   				   			for(var i=0 ;i<validate.length;i++){
+   	   	   				   				//alert(validate[i]);
+   	   	   				   				
+   	   	   				   				switch(validate[i]){
+		   	   	   				   				case 'require':
+		   	   	   	   				   				if(!$(this).val()){
+			   	   	   	   				   				//alert('check validation');
+		   	   	   	   	   				   						count++;
+						   	   		   	   	   				 	var error = $('<div/>').attr({"class" : "input_error" , "id" : 'error_'
+						   	  									+$(this).attr('name')}).html('Field is required');
+								   	  							$(this).after(error);
+								   	  							//return;
+		   	     	   	   				   				}
+		   	   	   	   				   				break;
+		   	   	   				   				case 'email':
+					   	   	   				   		if(!validateEmail($(this).val())){
+															count++;
+									   	   	   				 var error = $('<div/>').attr({"class" : "input_error" , "id" : 'error_'
+															+$(this).attr('name')}).html('Email is not valid');
+								  							$(this).after(error);
+			   	   				   				}
+		   	   	   	   				   				break;
+		   	   	   	   				   			default:
+		   	   	   	   				   				break;
+		   	   	   				   				}
+	   	   	   				   			}
+   	   	   				   		});
+	   	   				   		if(count>0)
+			   	   				  return false;
+	   	   				   		
+   	   				   });
+ 			});
+  		</script>
+</head>
+	
+
+<body>
+	<!--  -->
+		
+		
+<!-- onsubmit=" return validate()" -->
+		<h3>Please Register</h3>
+		<th></th>
+		<form:form action="user" method="post" name="registerationform" commandName="user" data-validation-form="registerationform" id="registerationform">
+		
+        	<div id="admin">
+        			<p><a href="/walker/admin.jsp">Admin Please click here</a>.</p>
+        	</div>
+        
+		<fieldset>
+		<div style="float: right;text-align: right;" valign="middle">
+			<table align="left" border="1" cellspacing="2" width="100%">
+					
+				<tr>
+				<th>First Name</th><td><input type="text" name="fname" maxlength="10" title="Please Enter your first name"  data-validate="require"/></td>
+				</tr>
+				
+				<tr>
+				<th>Last Name</th><td><input type="text" name="lname" maxlength="15" title="Please Enter your last name"  data-validate1="require"/></td>
+				</tr>
+				
+				<tr>
+				<th>Email ID</th><td><input type="text" name="emailid" maxlength="140" title="Please enter Email ID"  data-validate1="require|email"/></td>
+				</tr>
+				
+				<tr>
+				<th>Date of Birth</th><td><input type="text" id = "datepicker" name="dob" maxlength="20"/></td>
+				</tr>
+				
+				<tr>
+				<th>UserName</th><td><input type="text" name="uname" maxlength="20" title="Please enter your unique username"/></td>
+				</tr>
+				
+				<tr>
+				<th>addressLine1</th><td><input type="text" name="addressLine1" maxlength="20" title="Please enter address line 1"/></td>
+				</tr>
+				
+				<tr>
+				<th>addressLine2</th><td><input type="text" name="addressLine2" maxlength="20" title="Please enter address line 2"/></td>
+				</tr>
+				
+				<tr>
+				<th>addressLine3</th><td><input type="text" name="addressLine3" maxlength="20" title="Please enter address line 3"/></td>
+				</tr>
+				
+				<tr>
+				<th>City</th><td><input type="text" name="city" maxlength="20" /></td>
+				</tr>
+				
+				<!-- <tr>
+				<th>state</th><td><input type="text" name="state" maxlength="20" title="Please enter your state"/></td>
+				</tr> -->
+				
+				<tr>
+				<th>zipCode</th><td><input type="text" name="zip" maxlength="20" title="Please enter your zipcode"/></td>
+				</tr>
+				
+				<tr>
+				<th>Upload Image</th><td><input type="file" name="image" title="Please upload your image"/></td>
+				</tr>
+				
+				<tr>
+				<th></th>
+				<td>
+					<input type="radio" name="gender" value="male"/>Male
+					<input type="radio" name="gender" value="female"/>Female
+				</td>
+				</tr>
+				<tr>
+				<th align="left"></th>
+					<td>
+					<select name="list_country" style = "width:100px;" >
+						<option value="country">Please select Country</option>
+						<option value="india">India</option>
+						<option value="usa">USA</option>
+	  				</select>
+				</td>
+				</tr>
+				
+				<!-- this is the second drop down
+				 -->
+				<tr>
+				<th align="left"></th>
+				<td>	<select name="list_state_usa" style = "display:none;" >
+						<option value="state">Please select state</option>
+						<option value="Georgia">Georgia</option>
+						<option value="Illinois">Illinois</option>
+						<option value="NewYork">NewYork</option>
+						<option value="Delaware">Delaware</option>
+	  				</select>	
+				</td>
+				</tr>
+				
+				<tr>
+				<th></th>
+				<td>	<select name="list_state_india" style = "display:none;" >
+						<option value="state">Please select State</option>
+						<option value="MadhyaPradesh">Madhya Pradesh</option>
+						<option value="Bihar">Bihar</option>
+						<option value="Delhi">Delhi</option>
+						<option value="Kashmir">Kashmir</option>
+	  				</select>	
+				</td>
+				</tr>
+				
+				<tr>
+					<th></th>
+					<td><input type="submit" name="submit" value="Register"/>
+					<input type="reset" name="reset" value="Reset"/>
+					</td>
+				</tr>
+				</table>
+				</div>
+			</fieldset>
+			
 			
 		</form:form>
+		
 </body>
 </html>

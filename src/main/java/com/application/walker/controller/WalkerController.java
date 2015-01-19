@@ -17,13 +17,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.application.walker.service.Address;
 import com.application.walker.service.User;
 import com.application.walker.service.WalkerService;
+import com.sun.tools.internal.ws.processor.model.Request;
 
 /**
  * @author amit agarwal
  *
  */
 @Controller
-@RequestMapping(value = {"/","user","CreateUser","registrationSuccessfull","deleteuser"})
+@RequestMapping(value = {"/","user","CreateUser","registrationSuccessfull","deleteuser","/userinformation/"})
 public class WalkerController {
 	
 	@Autowired
@@ -51,7 +52,20 @@ public class WalkerController {
 		address.setAddressLine2(request.getParameter("addressLine2"));
 		address.setAddressLine3(request.getParameter("addressLine3"));
 		address.setCity(request.getParameter("city"));
-		address.setState(request.getParameter("state"));
+		
+		if(request.getParameter("state")!=null){
+			address.setState(request.getParameter("state"));	
+		}
+		else{
+			String state_india =request.getParameter("list_state_india");
+			if(!state_india.equalsIgnoreCase("state")){
+				address.setState(state_india);
+			}else{
+				String state_usa = request.getParameter("list_state_usa");
+				address.setState(state_usa);
+			}
+		}
+		
 		address.setZipcode(Integer.parseInt((request.getParameter("zip"))));
 		
 		User user = new User();
@@ -70,14 +84,22 @@ public class WalkerController {
 	
 	@RequestMapping(params = "delete",method=RequestMethod.POST)
 	@ResponseBody
-	private String deleteuser(@RequestParam("username") String username) throws Exception{
-		System.out.println("Username:" +username);
-		int result = getWalkerService().deletingUserInformation(username);
+	private String deleteuser(@RequestParam("username") String username,User user) throws Exception{
+		
+		int result = getWalkerService().deletingUserInformation(username,user);
+			
 			ModelAndView model = new ModelAndView();
 			model.setViewName("userinformation");
 			model.addObject("result", result);
 			
 		return "user information is deleted";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	@ResponseBody
+	private String listUsers(){
+		System.out.println("sending get request");
+		return null;
 	}
 	
 }
