@@ -1,48 +1,204 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"></link>
+<link href="/walker/styles/walker_style.css" rel="stylesheet" type="text/css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Welcome ${username}</title>
-
-
+<title>Welcome 
+<c:out value="${messages}"></c:out>
+</title>
 
 <style>
-    body { font-size: 80.5%; }
-    label, input { display:block; }
-    input.text { margin-bottom:12px; width:10%; padding: .4em; }
-    fieldset { padding:0; border:0; margin-top:25px;  }
-    h1 { font-size: 1.8em; margin: .6em 0; }
-    div#users-contain { width: 350px; margin: 20px 0; }
-    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .4em 8px; text-align: center; }
-    .ui-dialog .ui-state-error { padding: .3em; }
-    .validateTips { border: 1px solid transparent; padding: 0.1em; }
-  </style>
+</style>
+			<script type="text/javascript">
+			$(document).ready(function(){
+
+				$('#saveCalculation').hide();
+				$('.panel-control').hide();
+				
+				
+				$('#bmi_calculate').click(function(e){
+					$.ajax({
+						type: 'get',
+						data :{
+							'age':$("#age").val(), 
+							'height':$("#height").val(), 
+							'weight':$("#weight").val()
+							},
+						url: '/walker/calculateBMI/',
+
+						success : function(result){
+							$('#bmiresult').val(result);
+							
+						},
+						statusCode: {
+						    404: function(response) {
+						      alert('Page not found');
+						    },
+						  },
+						error:function (result) {
+							$('#bmiresult').append(${result});
+							}
+						});
+					$('#saveCalculation').show();
+				});
+
+				$('#saveCalculation').click(function(){
+					$.ajax({
+						type: 'post',
+						url: '/walker/savebmi/',
+						data :{
+							'id':'${id}',
+							'age':$("#age").val(),
+							'height':$("#height").val(), 
+							'weight':$("#weight").val(),
+							'bmi' : $("#bmiresult").val()
+							},
+							success : function(result){
+								alert(result);
+							},
+					});
+				});
+			});
+			</script>
 
 </head>
-<body>
+<body id="body">
 <div id="dialog-form" title="Create new user">
-  <p class="validateTips">All form fields are required.</p>
+  <!-- <p class="validateTips">All form fields are required.</p> -->
 <form>
-    <fieldset>
-		      <label for="height">height</label>
-		      <input type="text" name="height" id="height" value="" class="text ui-widget-content ui-corner-all">
-		      <label for="Weight">Weight</label>
-		      <input type="text" name="weight" id="weight" value="" class="text ui-widget-content ui-corner-all">
-		      <label for="age">Age</label>
-		      <input type="text" name="age" id="age" value="" class="text ui-widget-content ui-corner-all">
-		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-		      <input type="submit" tabindex="-1" style="position:absolute;">
-		      
-		      <div id="piechart" style="width: 900px; height: 500px;"></div>
-		      
-    </fieldset>
+<div class="container">
+	<div class="row">
+	 <div class="form-group">
+	<div class="page-header" style="margin-left: 55px;">
+	
+	
+	
+	
+	<ul class="nav navbar-right">
+	
+	<li class="dropdown">
+               
+       <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Settings <span class="caret"></span></a>
+                
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Change Password</a></li>
+                  <li><a href="#">Edit Profile</a></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </li>
+                       
+  							
+                        <!-- <div class="input-group custom-search-form" style="width: 180px;">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div> -->
+	</ul>
+	
+  <div class="panel panel-default" style="float: left; ">
+  <div class="panel-heading">
+    	<h3 class="panel-title">${messages}</h3>
+    	<b><c:if test="${not empty emptyList}">
+    		${emptyList} 
+		    		
+    	</c:if></b>
+  </div>
+</div>
+   <div class="message" style="color: red;">
+   
+   </div>
+    <h3 class="text-center login-title">Enter following information</h3>
+    </div>
+    
+    <%!
+    String theDate = "dash";
+	%>
+
+    <%@include file="/leftmenutemplate.jsp"%>
+    <div class="col-md-6">
+     <div class="row">
+     
+     <div>
+    
+     		<c:out value="${result}"></c:out>
+     </div>
+     
+     <c:out value="${Successfull}"></c:out>
+     
+     <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Health Chart</h3>
+            </div>
+            	
+            	<%@include file="/foodtemplate.jsp"%>
+            	<%@include file="/coach.jsp"%>
+            
+            <div id="bmicalculator" class="panel-control">
+            
+            <div class="panel-body">
+            	<div class="form-group">
+            		<label>
+           					Age
+            		</label>
+            		<input type="text" id="age" value="" class="form-control"/>
+            	
+            	</div>
+            	
+            	
+            	<div class="form-group">
+            		<label>
+           					Height
+            		</label>
+            		<input type="text" id="height" value="" class="form-control"/>
+            	
+            	</div>
+            	
+            	<div class="form-group">
+            		<label>
+           					Weight
+            		</label>
+            		<input type="text" id="weight" value="" class="form-control"/>
+            	
+            	</div>
+           		
+           		<div class="form-group">
+           			<label>BMI</label>
+           			<input type="text" class="form-control" value = "${result}" id = "bmiresult" placeholder="BMI" readonly/>
+           			
+           		</div>
+                <div class="form-group">
+                	<input type="button" name = "bmi" id = "bmi_calculate" value = "Calculate" class="btn btn-lg btn-success"/>
+                	<input type="button" name = "saveCalculation" id = "saveCalculation" value = "Save" class="btn btn-lg btn-success" style="float: right; vertical-align: middle;"/>
+                </div>
+
+            </div>
+            </div>
+          </div>
+          </div>
+   
+    </div>
+    </div>
+    </div>
+  </div>
+  
 </form>
 </div>
 </body>

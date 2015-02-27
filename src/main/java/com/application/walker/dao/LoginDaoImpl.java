@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.application.walker.service.User;
 
 /**
- * to denote the class as DAO layer class (this class will handle only login functionality
+ * to denote the class as DAO layer class (this class will handle only login functionality)
  * @author Amit Agarwal
  *
  */

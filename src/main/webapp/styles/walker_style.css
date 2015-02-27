@@ -1,0 +1,17 @@
+.left-menu{
+	list-style:none;
+	border-color: #ddd;
+	border-radius : 5px;
+	
+}
+.left-menu li{
+	padding: 5px 5px 5px 15px;
+	background: #ECECEC;
+	border-bottom: 2px solid #ddd;
+	
+}
+
+.input-group-btn .btn {
+	padding: 9px 12px;
+}
+

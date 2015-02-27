@@ -2,9 +2,9 @@
 		
 		<form:form action="user" method="post" name="registerationform" commandName="user" data-validation-form="registerationform" id="registerationform">
         
-		<fieldset>
-		<div style="float: right;text-align: right;" valign="middle">
-			<table align="left" border="1" cellspacing="2" width="100%">
+		
+		<div style="float: left; width:50% ; border:1px solid #ccc; padding:5px" valign="middle">
+			<table align="left" cellspacing="2" width="100%">
 					
 				<tr>
 				<th>First Name</th><td><input type="text" name="fname" maxlength="10" title="Please Enter your first name"  data-validate="require"/></td>
@@ -42,9 +42,9 @@
 				<th>City</th><td><input type="text" name="city" maxlength="20" /></td>
 				</tr>
 				
-				<!-- <tr>
+				<tr>
 				<th>state</th><td><input type="text" name="state" maxlength="20" title="Please enter your state"/></td>
-				</tr> -->
+				</tr>
 				
 				<tr>
 				<th>zipCode</th><td><input type="text" name="zip" maxlength="20" title="Please enter your zipcode"/></td>
@@ -61,7 +61,7 @@
 					<input type="radio" name="gender" value="female"/>Female
 				</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 				<th align="left"></th>
 					<td>
 					<select name="list_country" style = "width:100px;" >
@@ -72,8 +72,8 @@
 				</td>
 				</tr>
 				
-				<!-- this is the second drop down
-				 -->
+				this is the second drop down
+				
 				<tr>
 				<th align="left"></th>
 				<td>	<select name="list_state_usa" style = "display:none;" >
@@ -96,7 +96,7 @@
 						<option value="Kashmir">Kashmir</option>
 	  				</select>	
 				</td>
-				</tr>
+				</tr> -->
 				
 				<tr>
 					<th></th>
@@ -106,5 +106,5 @@
 				</tr>
 				</table>
 				</div>
-			</fieldset>
+			
 		</form:form>

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <title>Retrieved User Information</title>
 
 <script type="text/javascript" >
@@ -28,12 +29,13 @@
 </head>
 	
 <body>
-				<c:if test="${result !=null}">
+				<%-- <c:if test="${result !=null}">
 					<c:out value="${result}">information deleted</c:out>
 				</c:if>
-				<c:out value=""></c:out>
+				<c:out value=""></c:out> --%>
 					
-					<form:form method="post" action="deleteuser">
+<form:form method="GET" action="deleteuser">
+					
 						<table align="center" border="2">
 						
 								<th>First Name</th>
@@ -87,9 +89,9 @@
 									</br><div id="updateuser" class="none"><input type="submit" name="update" value="update" align="top"/></div> -->
 									
 									<!-- delete functionality -->
-									<!-- <p>If you want to delete some user information, please enter his username</p>
+									<p>If you want to delete some user information, please enter his username</p>
 									<input type="text" name="username" placeholder="delete.."></input>
-									</br><div id="deleteuser" class="none"><input type="submit" name="delete" value="Delete" align="top"/></div> -->
+									</br><div id="deleteuser" class="none"><input type="submit" name="delete" value="Delete" align="top"/></div>
 									
 					</form:form>
 					

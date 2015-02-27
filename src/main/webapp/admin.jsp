@@ -33,11 +33,14 @@
 
 </head>
 <body id="homepage">
-  		<form:form action="/walker/searchuser/" name="admin_login_form" commandName="admin_user" method="posts">
+  		<form:form action="/walker/searchuser/" name="admin_login_form" commandName="admin_user" method="POST,GET">
 			<c:if test="${messages != null}">
 				<c:out value="${messages}" ></c:out>
 			</c:if>
 			
+			<c:if test="${logOutSessions != null}">
+				<c:out value="${logOutSessions}" ></c:out>
+			</c:if>
 			
 		<table align="center" border="1" cellspacing="2">
 			<tr>

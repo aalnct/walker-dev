@@ -3,7 +3,7 @@
   <display-name>walker</display-name>
   <welcome-file-list>
     <!-- <welcome-file>CreateUser.jsp</welcome-file> -->
-   <welcome-file>login.jsp</welcome-file>
+   <welcome-file>welcomeuser.jsp</welcome-file>
   </welcome-file-list>
 
 	<display-name>walker Application</display-name>
@@ -19,7 +19,8 @@
 			/WEB-INF/classes/applicationcontext.xml,
 			/WEB-INF/classes/Address.hbm.xml,
 			/WEB-INF/classes/User.hbm.xml,
-			/WEB-INF/classes/Creditcard.hbm.xml
+			/WEB-INF/classes/Creditcard.hbm.xml,
+			<!-- /WEB-INF/classes/persistence.xml -->
 		</param-value>
 	</context-param>
 

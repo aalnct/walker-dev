@@ -2,6 +2,7 @@ package com.application.walker.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 		public static SessionFactory getSession(){
 			try{
 				//building the session
-				sessionFactory = new Configuration().configure().buildSessionFactory();
+				//sessionFactory = new Configuration().configure().buildSessionFactory();
+				sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 			}catch(Exception exception){
 				System.out.println("Failed to create session object");
 				exception.printStackTrace();

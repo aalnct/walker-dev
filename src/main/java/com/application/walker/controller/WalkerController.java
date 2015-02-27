@@ -3,11 +3,16 @@
  */
 package com.application.walker.controller;
 
+
+
+import java.io.Serializable;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,21 +20,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.application.walker.service.Address;
+import com.application.walker.service.Coach;
 import com.application.walker.service.User;
+import com.application.walker.service.WalkerCalculation;
 import com.application.walker.service.WalkerService;
-import com.sun.tools.internal.ws.processor.model.Request;
+import com.application.walker.service.health;
 
 /**
  * @author amit agarwal
  *
  */
 @Controller
-@RequestMapping(value = {"/","user","CreateUser","registrationSuccessfull","deleteuser","/userinformation/"})
-public class WalkerController {
+@RequestMapping(value = {"/","user","CreateUser","registrationSuccessfull","deleteuser/*","/walker"})
+public class WalkerController implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private WalkerService walkerService;
+	@Autowired
+	private WalkerCalculation walkerCalculation;
 	
+	public WalkerCalculation getWalkerCalculation() {
+		return walkerCalculation;
+	}
+
 	public WalkerService getWalkerService() {
 		return walkerService;
 	}
@@ -42,8 +59,8 @@ public class WalkerController {
 		
 	}
 	
-	@RequestMapping(params = "submit",method=RequestMethod.POST)
-	private ModelAndView registerUser(HttpServletRequest request){
+	@RequestMapping(params = "submit",method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView registerUser(HttpServletRequest request){
 		ModelAndView model = new ModelAndView("registrationSuccessfull");
 		
 		Address address = new Address();
@@ -76,30 +93,75 @@ public class WalkerController {
 		user.setEmailAddress(request.getParameter("emailid"));
 		user.setDob(request.getParameter("dob"));
 		
+		if(walkerService == null){
+			walkerService = new WalkerService();
+		}
+		
 		getWalkerService().addEmployee(user);
 		
 		model.setViewName("registrationSuccessfull");
 		return model;
 	}
-	
-	@RequestMapping(params = "delete",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteuser/{id}", method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	private String deleteuser(@RequestParam("username") String username,User user) throws Exception{
-		
-		int result = getWalkerService().deletingUserInformation(username,user);
+	private String deleteuser(@PathVariable("id") int id,User user) throws Exception{
+		int result = getWalkerService().deletingUserInformation(id,user);
 			
 			ModelAndView model = new ModelAndView();
-			model.setViewName("userinformation");
-			model.addObject("result", result);
+			model.setViewName("deleteuser");
+			//model.addObject("result", result);
 			
 		return "user information is deleted";
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
-	private String listUsers(){
-		System.out.println("sending get request");
-		return null;
+	@RequestMapping(value = "/calculateBMI/",method={RequestMethod.GET,RequestMethod.POST})
+	private String calculateBMI(@RequestParam int age,@RequestParam Double height,@RequestParam float weight){
+		//passing the request to service
+		Double result = getWalkerCalculation().bmiCalculation(age, height, weight);
+		ModelAndView modelandview = new ModelAndView();
+		String aString = Double.toString(result);
+		modelandview.addObject("result", result);
+		System.out.println(result);
+		modelandview.setViewName("success");
+		return aString;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/savebmi/",method={RequestMethod.GET,RequestMethod.POST})
+	private String saveBMIUser(HttpServletRequest request, @RequestParam Integer id,@RequestParam int age,
+			@RequestParam Double height, @RequestParam float weight,@RequestParam float bmi){
+		health h = new health();
+		
+		h.setUserId(id);
+		h.setAge(age);
+		h.setHeight(height);
+		h.setWeight(weight);
+		h.setBmi(bmi);
+		
+		String SuccessfullMessage = getWalkerService().saveBMIService(h);
+		ModelAndView model= new ModelAndView();
+		model.addObject("Successfull", SuccessfullMessage);
+		model.setViewName("success");
+		return "User Information is saved :)";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/saveCoach/", method = RequestMethod.POST)
+	private String saveCoachInformation(@RequestParam String name, @RequestParam String description){
+		//Calling service
+		getWalkerService().saveCoachInformation(name, description);
+		System.out.println("Saving coach information");
+		String Message = "user information is saved";
+		return Message;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/coachlist/")
+	private String getCoachList(){
+		System.out.println("Getting list of all coaches");
+		List<String> coachList = getWalkerService().getAllCoach();
+		return coachList.toString();
+	}
 }

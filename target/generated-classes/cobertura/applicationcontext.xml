@@ -23,12 +23,13 @@
       
       <bean id="walkerController" class="com.application.walker.controller.WalkerController">
       		<property name="walkerService" ref="walkerService"></property>
+      		<!-- <property name="walkerCalculation" ref="walkerCalculation"></property> -->
+      		
       </bean>  
       
       <bean id="loginController" class="com.application.walker.controller.LoginController">
       		<property name="walkerService" ref="walkerService"></property>
       </bean>
-      
       
       <bean id = "logindao" class= "com.application.walker.dao.LoginDaoImpl">
       </bean>
@@ -38,6 +39,7 @@
       	</bean>
       
       <bean id="walkerDAO" class="com.application.walker.dao.WalkerDAO">
+      
       	</bean>
 		
 	<bean id="walkerUtil" class="com.application.walker.dao.WalkerUtil">
@@ -46,6 +48,9 @@
 	<bean id="walkerOperation" class="com.application.walker.dao.WalkerDAOOperations">
 		</bean>
 		
+	<bean id="walkerCalculation" class="com.application.walker.service.WalkerCalculation">
+	</bean>	
+		
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="configLocation">    
         <value>
@@ -53,11 +58,9 @@
         </value>
     </property>
 	</bean>
-	
+    
 	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
-	
 	
 </beans>

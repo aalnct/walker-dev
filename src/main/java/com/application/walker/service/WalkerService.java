@@ -1,15 +1,22 @@
 package com.application.walker.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.application.walker.dao.IWalkerDAO;
+import com.application.walker.dao.LoginDaoImpl;
+import com.application.walker.dao.WalkerDAO;
 import com.application.walker.dao.iLoginDao;
 
 @Service
+@Transactional(propagation =Propagation.REQUIRES_NEW)
 public class WalkerService {
 	
 	@Autowired
@@ -28,12 +35,16 @@ public class WalkerService {
 	public IWalkerDAO getiWalkerDAO() {
 		return iWalkerDAO;
 	}
-	public void setiWalkerDAO(IWalkerDAO iWalkerDAO) {
-		this.iWalkerDAO = iWalkerDAO;
-	}
 	
 	//will pass this to controller
+	//@Transactional
 	public void addEmployee(User user){
+		if(iWalkerDAO == null){
+			iWalkerDAO = new WalkerDAO();
+			if(iLoginDao == null){
+				iLoginDao = new LoginDaoImpl();
+			}
+		}
 		getiWalkerDAO().addUser(user);
 	}
 	
@@ -42,15 +53,56 @@ public class WalkerService {
 		return user;
 	}
 	
-	public List<User> retireveUserbyUserName(List<String> username, List<String> lastname, List<String> emailid){
-		List<User> user = iWalkerDAO.retrieveUser(username,lastname,emailid);
+	public List<User> retireveUserbyUserName(List<String> username, List<String> lastname, List<String> emailid,String dob,Integer zip){
+		List<User> user = iWalkerDAO.retrieveUser(username,lastname,emailid,dob,zip);
 		return user;
 	}
-	
-	public int deletingUserInformation(String username,User user) throws Exception {
-		int result = iWalkerDAO.deleteUser(username,user);
+	//@Transactional
+	public int deletingUserInformation(int id,User user) throws Exception {
+		int result = iWalkerDAO.deleteUser(id,user);
 		return result;
 		
+	}
+	//@Transactional
+	public String saveBMIService(health health){
+		String message = getiWalkerDAO().saveBMIiDAO(health);
+		return message;
+	}
+	
+	public List retrieveUserHistory(int id){
+		List response = getiWalkerDAO().retrieveUserHealthHistory(id);
+		return response;
+	}
+	
+	
+	public String saveCoachInformation(String name, String description){
+		String message = getiWalkerDAO().saveCoachData(name, description);
+		return message;
+	}
+	
+	public List<String> getAllCoach(){
+		List<String> coachStringList = new ArrayList<String>();
+
+		List<Coach> coachList =  getiWalkerDAO().getListofCoach();
+		
+		for(Coach coach1 : coachList){
+			
+			if(coachList.isEmpty()){
+			Coach coach = new Coach();
+			coach.setMessage("No data  found");
+			//return coach;
+		
+		}
+
+			coachStringList.add(coach1.getName());
+			coachStringList.add(coach1.getDescription());
+			coachStringList.add(Integer.toString(coach1.getId()));
+		}
+		
+		return coachStringList;
+	}
+	public void setiWalkerDAO(IWalkerDAO iWalkerDAO) {
+		this.iWalkerDAO = iWalkerDAO;
 	}
 	
 }

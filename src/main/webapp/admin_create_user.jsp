@@ -1,10 +1,10 @@
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 		
 		<form:form action="user" method="post" name="registerationform" commandName="user" data-validation-form="registerationform" id="registerationform">
         
-		<fieldset>
-		<div style="float: right;text-align: right;" valign="middle">
-			<table align="left" border="1" cellspacing="2" width="100%">
+		
+		<div style="float: left; width:50% ; border:1px solid #ccc; padding:5px" valign="middle">
+			<table align="left" cellspacing="2" width="100%">
 					
 				<tr>
 				<th>First Name</th><td><input type="text" name="fname" maxlength="10" title="Please Enter your first name"  data-validate="require"/></td>
@@ -106,5 +106,5 @@
 				</tr>
 				</table>
 				</div>
-			</fieldset>
+			
 		</form:form>

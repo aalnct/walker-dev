@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-<!-- <script type="text/javascript" src="styles/helper.js"></script> -->
 <title>Create User</title>
 
 	<style type="text/css">
@@ -44,7 +43,8 @@
 		<script>
   			$(function() {
     			$( "#datepicker" ).datepicker({
-  			      numberOfMonths: 3,
+  			      changeMonth: true,
+	  		      changeYear: true,
   			      showButtonPanel: true
   			    });
   			    //for tooltip
@@ -127,27 +127,27 @@
 				</tr>
 				
 				<tr>
-				<th>Last Name</th><td><input type="text" name="lname" maxlength="15" title="Please Enter your last name"  data-validate1="require"/></td>
+				<th>Last Name</th><td><input type="text" name="lname" maxlength="15" title="Please Enter your last name"  data-validate="require"/></td>
 				</tr>
 				
 				<tr>
-				<th>Email ID</th><td><input type="text" name="emailid" maxlength="140" title="Please enter Email ID"  data-validate1="require|email"/></td>
+				<th>Email ID</th><td><input type="text" name="emailid" maxlength="140" title="Please enter Email ID"  data-validate="require|email"/></td>
 				</tr>
 				
 				<tr>
-				<th>Date of Birth</th><td><input type="text" id = "datepicker" name="dob" maxlength="20"/></td>
+				<th>Date of Birth</th><td><input type="text" id = "datepicker" name="dob" maxlength="20" data-validate="require"/></td>
 				</tr>
 				
 				<tr>
-				<th>UserName</th><td><input type="text" name="uname" maxlength="20" title="Please enter your unique username"/></td>
+				<th>UserName</th><td><input type="text" name="uname" maxlength="20" title="Please enter your unique username" data-validate="require"/></td>
 				</tr>
 				
 				<tr>
-				<th>addressLine1</th><td><input type="text" name="addressLine1" maxlength="20" title="Please enter address line 1"/></td>
+				<th>addressLine1</th><td><input type="text" name="addressLine1" maxlength="20" title="Please enter address line 1" data-validate="require"/></td>
 				</tr>
 				
 				<tr>
-				<th>addressLine2</th><td><input type="text" name="addressLine2" maxlength="20" title="Please enter address line 2"/></td>
+				<th>addressLine2</th><td><input type="text" name="addressLine2" maxlength="20" title="Please enter address line 2" data-validate="require"/></td>
 				</tr>
 				
 				<tr>
@@ -155,7 +155,7 @@
 				</tr>
 				
 				<tr>
-				<th>City</th><td><input type="text" name="city" maxlength="20" /></td>
+				<th>City</th><td><input type="text" name="city" maxlength="20" data-validate="require"/></td>
 				</tr>
 				
 				<!-- <tr>

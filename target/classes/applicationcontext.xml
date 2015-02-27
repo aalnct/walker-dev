@@ -16,37 +16,31 @@
       <mvc:annotation-driven/>
       <context:annotation-config/>
       <context:component-scan base-package="com.application.walker"/>  
-     
-      <tx:annotation-driven transaction-manager="txManager" />	
       
       <mvc:resources mapping="/styles/**" location="/styles/"/>
       
-      <bean id="walkerController" class="com.application.walker.controller.WalkerController">
+      <!-- <bean id="walkerController" class="com.application.walker.controller.WalkerController">
       		<property name="walkerService" ref="walkerService"></property>
+      		<property name="walkerCalculation" ref="walkerCalculation"></property>
+      		
       </bean>  
       
       <bean id="loginController" class="com.application.walker.controller.LoginController">
       		<property name="walkerService" ref="walkerService"></property>
+      </bean> -->
+      
+      <!-- <bean id = "logindao" class= "com.application.walker.dao.LoginDaoImpl">
+      </bean> -->
+      
+      <tx:annotation-driven/>
+      
+       <bean id="walkerService" class="com.application.walker.service.WalkerService">
+      	<property name="iWalkerDAO" ref="walkerDAO"></property>
       </bean>
       
       
-      <bean id = "logindao" class= "com.application.walker.dao.LoginDaoImpl">
-      </bean>
-      
-      <bean id="walkerService" class="com.application.walker.service.WalkerService">
-      	<property name="iLoginDao" ref="logindao"></property>
-      	</bean>
-      
-      <bean id="walkerDAO" class="com.application.walker.dao.WalkerDAO">
-      	</bean>
-		
-	<bean id="walkerUtil" class="com.application.walker.dao.WalkerUtil">
-		</bean>
-	
-	<bean id="walkerOperation" class="com.application.walker.dao.WalkerDAOOperations">
-		</bean>
-		
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+      <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    	<!-- <property name="dataSource" ref = "dataSource"></property> -->
 		<property name="configLocation">    
         <value>
             /WEB-INF/classes/hibernate.cfg.xml
@@ -54,12 +48,34 @@
     </property>
 	</bean>
 	
-	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="sessionFactory"/>
-    </bean> -->
     
 	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+       
+      
+      <bean id="walkerDAO" class="com.application.walker.dao.WalkerDAO">
+      	<property name="sessionFactory" ref="sessionFactory"></property>
+      </bean>
+		
+	<!-- <bean id="walkerUtil" class="com.application.walker.dao.WalkerUtil">
+		</bean>
+	
+	<bean id="walkerOperation" class="com.application.walker.dao.WalkerDAOOperations">
+		</bean>
+		
+	<bean id="walkerCalculation" class="com.application.walker.service.WalkerCalculation">
+	</bean> -->	
+		
+	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation">    
+        <value>
+            /WEB-INF/classes/hibernate.cfg.xml
+        </value>
+    </property>
+	</bean> -->
+	
+	
+	
 	
 </beans>
