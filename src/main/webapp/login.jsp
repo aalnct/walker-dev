@@ -15,6 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <title>Login Page</title>
+
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="styles/helper.js"></script>
 <link href="styles/login.css" rel="stylesheet" type="text/css"/>
@@ -37,8 +38,10 @@
 	
 	<div class="panel panel-default" style="float: !important; text-align: center; font-size:16px; font-style: italic;
 	font-weight: 100;">
-	 	<div class="panel-heading">
-				<a href="javascript:void(0);" rel='createuser'>If not a member, please Register</a></p>
+	 	<div class="panel-heading">If not a member,
+	 	</div>
+	 	<div class="panel-body">
+				<a href="javascript:void(0);" rel='createuser'>Please Register</a></p>
 		</div>
 	</div>
 	
@@ -54,7 +57,7 @@
 				<form:form action="dashboard" id="loginform" name="form" commandName="dashboard" method="post">
 			
 			<img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
-                    alt=""/>
+                    alt="Work in Progress, Will be back soon :)"/>
 			
 					<p>Enter your User Name:</p>
                 	<input type="text" class="logininput" name="username"/>

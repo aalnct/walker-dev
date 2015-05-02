@@ -6,11 +6,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"></link>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <title>Login Page</title>
+
 <link href="styles/layout.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="styles/helper.js"></script>
 <link href="styles/login.css" rel="stylesheet" type="text/css"/>
@@ -30,6 +35,16 @@
 			</style>
 </head>
 <body>
+	
+	<div class="panel panel-default" style="float: !important; text-align: center; font-size:16px; font-style: italic;
+	font-weight: 100;">
+	 	<div class="panel-heading">If not a member,
+	 	</div>
+	 	<div class="panel-body">
+				<a href="javascript:void(0);" rel='createuser'>Please Register</a></p>
+		</div>
+	</div>
+	
 	<div id="logincontainer">
 		<div id="loginbox">
 			<div id="loginheader">
@@ -54,15 +69,15 @@
 				
 			</div>
 			
-					<p id="register">If not a member, please
-				<a href="javascript:void(0);" rel='createuser'>Register</a></p>
+			<!-- <p id="register">If not a member, please
+			<a href="javascript:void(0);" rel='createuser'>Register</a></p> -->
 				
 		</div>
 				<img src="styles/login_fade.png" alt="Fade" />
 	</div>
-	<p align="center"><b>Admin Please login</b></p>
-	<div id="admin">
+	<!-- <p align="center"><b>Admin Please login</b></p> -->
+	<!-- <div id="admin">
         			<p id="admin" align="center"><a href="/walker/admin.jsp">Admin Please click here</a>.</p>
-        	</div>
+        	</div> -->
 </body>
 </html>

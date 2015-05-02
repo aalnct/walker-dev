@@ -5,11 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.sun.istack.internal.NotNull;
 
 @Entity
 @Table(name="health",catalog="walker")
@@ -20,19 +16,16 @@ public class health {
 		private int health_id;
 		
 		@Column(name="height")
-		@NotNull
+		
 		private double height;
 		
 		@Column(name="weight")
-		@NotNull
 		private float weight;
 		
 		@Column(name="age")
 		private int age;
 		@Column(name="bmi")
 		private float bmi;
-		
-		//private User user;
 		
 		private int userId;
 
@@ -68,16 +61,6 @@ public class health {
 			this.age = age;
 		}
 		
-//		@ManyToOne
-//		@JoinColumn(name="id")
-//		public User getUser() {
-//			return user;
-//		}
-//
-//		public void setUser(User user) {
-//			this.user = user;
-//		}
-
 		public float getBmi() {
 			return bmi;
 		}

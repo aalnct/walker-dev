@@ -106,10 +106,6 @@
 	
 
 <body>
-	<!--  -->
-		
-		
-<!-- onsubmit=" return validate()" -->
 		<h3>Please Register</h3>
 		<th></th>
 		<form:form action="user" method="post" name="registerationform" commandName="user" data-validation-form="registerationform" id="registerationform">

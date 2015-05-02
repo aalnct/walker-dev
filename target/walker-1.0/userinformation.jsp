@@ -29,11 +29,6 @@
 </head>
 	
 <body>
-				<%-- <c:if test="${result !=null}">
-					<c:out value="${result}">information deleted</c:out>
-				</c:if>
-				<c:out value=""></c:out> --%>
-					
 <form:form method="GET" action="deleteuser">
 					
 						<table align="center" border="2">
@@ -72,11 +67,6 @@
 								</c:forEach>
 						</table>
 									
-									<!-- </br><input type = "radio" name ="user" value = "Create" data-id="createuser">Create New User</input>
-									</br><input type = "radio" name ="user" value = "update" data-id="updateuser">Update</input>	
-									</br><input type = "radio" name ="user" value = "deleteUser" data-id="deleteuser">Delete</input> -->
-									
-									
 									<tr></tr>
 									<tr></tr>
 									<tr></tr>
@@ -84,15 +74,6 @@
 									<td></td>
 									
 									</br>
-									
-									<!-- </br><div id="createuser" class="none"><input type="submit" name="creatinguser" value="Create User" align="top"/></div>
-									</br><div id="updateuser" class="none"><input type="submit" name="update" value="update" align="top"/></div> -->
-									
-									<!-- delete functionality -->
-									<p>If you want to delete some user information, please enter his username</p>
-									<input type="text" name="username" placeholder="delete.."></input>
-									</br><div id="deleteuser" class="none"><input type="submit" name="delete" value="Delete" align="top"/></div>
-									
 					</form:form>
 					
 </body>

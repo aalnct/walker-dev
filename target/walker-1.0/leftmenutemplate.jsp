@@ -1,25 +1,18 @@
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<%
-			
-		/* out.println(theDate); */
-
-%>
-
-	<script type="text/javascript">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<script type="text/javascript">
+	
 	$(function(){ 
-		 $("a[rel=bmicalculator]").on('click',function(){
-			 $('.panel-body').toggle();
-		 });
+
+		$('.left-menu a').click(function(){
+				var rel = $(this).attr('rel');
+				$('.panel-control').hide();
+				$('#' + rel).show();
+		});
 	});
-	$(function(){ 
-		 $("a[rel=food]").on('click',function(){
-			 $('#dropdownChart').toggle();
-			 //$('.panelbmi').hide();
-		 });
-	});
-	</script>
-            
+	
+</script>
+	
+<form:form method="GET">
 <div class="col-md-3">
 
     	<ul class="left-menu">
@@ -41,7 +34,7 @@
     		</li>
     		
     		<li>
-    			<a href="javascript:void(0);"rel="food">Food</a>
+    			<a href="javascript:void(0);"rel="foodContainer">Food</a>
     		</li>
     		
     		<li>
@@ -49,8 +42,13 @@
     		</li>
     		
     		<li>
-    			<a href="javascript:void(0);"rel="coach">Coach</a>
+    			<a href="javascript:void(0);"rel="coachContainer">Coach</a>
+    		</li>
+    		
+    		<li>
+    			<a href="<c:url value="/retrieveHistory/${id}/"/>">History</a>
+    			
     		</li>
     	</ul>
     </div>
-    
+</form:form>

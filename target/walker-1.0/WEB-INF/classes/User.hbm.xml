@@ -11,6 +11,9 @@
         <many-to-one name="address" class="com.application.walker.service.Address" fetch="select" cascade="all">
             <column name="address_id" not-null="true" />
         </many-to-one>
+        <many-to-one name="coach" class="com.application.walker.service.Coach" fetch="select" cascade="all">
+            <column name="coach_id"/>
+        </many-to-one>
         <property name="firstName" type="string">
             <column name="first_name" length="45" />
         </property>

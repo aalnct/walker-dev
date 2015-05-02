@@ -1,12 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%
-			
-		/* out.println(theDate); */
-
-%>
-
-	<script type="text/javascript">
-	
+<script type="text/javascript">
 	
 	$(function(){ 
 
@@ -17,9 +10,9 @@
 		});
 	});
 	
-	</script>
+</script>
+	
 <form:form method="GET">
-            
 <div class="col-md-3">
 
     	<ul class="left-menu">

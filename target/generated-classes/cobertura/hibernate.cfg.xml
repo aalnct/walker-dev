@@ -11,8 +11,9 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/walker</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.pool_size">30</property>
-        <property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.connection.pool_size">10</property>
+       	<property name="hibernate.connection.autocommit">true</property>
+        
         
         <!-- <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
         <property name="hibernate.cache.use_second_level_cache">true</property>
@@ -31,10 +32,8 @@
         <mapping resource="User.hbm.xml"/>
         <mapping resource="Address.hbm.xml"/>
         <mapping resource="Creditcard.hbm.xml"/>
-        <mapping class="com.application.walker.service.health"></mapping> 
-    
+        <mapping class="com.application.walker.service.health"/>
+    	<mapping class="com.application.walker.service.Coach"/>
     </session-factory>
-    
-    
     
 </hibernate-configuration>

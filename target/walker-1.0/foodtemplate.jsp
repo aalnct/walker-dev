@@ -1,25 +1,20 @@
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-
-			<script>
+		
+		<script>
 			$(function(){
-				$('#dropdownChart').hide();
-
-				$('#dropdownMenu1').change(function(){
-					alert('changes detected');
+				$('#foodCategory li a').click(function(){
+						var foodItems = $(this).attr('role');
+						alert(foodItems);
 					});
 				
 				});
 			
-			/* $('#dropdownMenu1')..click(function(){
-				$( ".dropdown-menu" ).change();
-				alert('changes detected');
-				}); */
+			
 			
 			</script>
+<div id="foodContainer" class="panel-control">
 
 <div class="panel-body">
-		<div id="dropdownChart">
+		
             	<div class="form-group">
             		<label>
            					Tell us more about your diet, may be we can help
@@ -32,13 +27,13 @@
     					Food Chart
   					</button>
   					
-  					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-  					    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">BreakFast</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">Lunch</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">Tea Time</a></li>
-					    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">Snacks</a></li>
+  					<ul class="dropdown-menu" id="foodCategory">
+  					    <li><a role="breakfast" tabindex="-1" href="javascript:void(0);">BreakFast</a></li>
+					    <li><a role="lunch" tabindex="-1" href="javascript:void(0);">Lunch</a></li>
+					    <li><a role="tea" tabindex="-1" href="javascript:void(0);">Tea Time</a></li>
+					    <li><a role="snacks" tabindex="-1" href="javascript:void(0);">Snacks</a></li>
 					</ul>
 					
             		</div>
-</div>            
+  </div>
 </div>

@@ -35,11 +35,11 @@ public class User implements java.io.Serializable {
 	private String emailAddress;
 	private Creditcard creditcard;
 	
-	//one coach many users
-//	@ManyToOne
-//	@JoinColumn(name = "coach_id")
+	
+
+	@JoinColumn(name = "coach_id")
 	private Coach coach;
-//	//means one user and many health records
+
 	
 	private Set<health> health = new HashSet<health>();
 	

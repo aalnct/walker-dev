@@ -3,6 +3,7 @@ package com.application.walker.controller;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -34,7 +35,7 @@ public class LoginController {
 	
 	@Autowired
 	private WalkerDAOOperations walkerDaoOperations;
-	
+	 
 	public WalkerDAOOperations getWalkerDaoOperations() {
 		return walkerDaoOperations;
 	}
@@ -55,7 +56,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(params = "login", method = RequestMethod.POST)
-	private ModelAndView onSubmit(@RequestParam String username, @RequestParam String lastname){
+	public ModelAndView login(@RequestParam String username, @RequestParam String lastname){
 		ModelAndView model = new ModelAndView("success");
 		System.out.println("logged in");
 		String message = null;
@@ -115,7 +116,7 @@ public class LoginController {
 		}
 		
 		
-		List<User> user =getWalkerService().retireveUserbyUserName(username,lastname,emailid,dob,zip);
+		Set<User> user =getWalkerService().retireveUserbyUserName(username,lastname,emailid,dob,zip);
 		if(logout == null){
 			if(!user.isEmpty()){
 					Iterator<User> iterator = user.iterator();
@@ -138,7 +139,7 @@ public class LoginController {
 				modelandview.setViewName("searchuser");
 			}
 		else {
-			String logOutSession = "logged out. Please login again";
+			String logOutSession = "Logged out";
 			logout(session);
 			modelandview.addObject("logOutSessions", logOutSession);
 			modelandview.setViewName("admin");

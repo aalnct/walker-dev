@@ -20,10 +20,10 @@ pageEncoding="ISO-8859-1"%>
 <title>Welcome 
 <c:out value="${messages}"></c:out>
 </title>
-
 <style>
 </style>
 			<script type="text/javascript">
+			
 			$(document).ready(function(){
 
 				$('#saveCalculation').hide();
@@ -72,21 +72,77 @@ pageEncoding="ISO-8859-1"%>
 							},
 					});
 				});
+				
+			$( ".dropdown-menu li a[rel=editProfile]" ).on( "click", function(response) {
+				      $.ajax({
+				    	 	type:'get',
+				    	 	url:'/walker/updateUserInformation/',
+				   			data :{
+				   				
+				   				'id' : '${id}'
+				   				
+				   			},
+				   			success :function(response) {
+				   				alert(response);
+								<c:forEach var = "usersData" items = "${users}">
+		   						<td><c:out value="${usersData.firstName}"></c:out></td>
+		   						alert('<c:out value="${usersData.firstName}"></c:out>');
+		   						</c:forEach>
+				   			},
+				   			error :function(response){
+				   				alert(response);
+				   			},
+				      });
+				      
+				      
+				    });
+			
+			$(".dropdown-menu li a[rel=student]").on('click',function(){
+				var rel = $(this).attr('rel');
+				$('.panel-control').hide();
+				$('#' + rel).show();
+			
 			});
+				
+			$(".dropdown-menu li a[rel=passwordContainer]").on('click',function(){
+				var rel = $(this).attr('rel');
+				$('.panel-control').hide();
+				$('#' + rel).show();
+			
+			});
+			
+			
+			$(".dropdown-menu li a[rel=logout]").on('click',function(){
+				alert('test');
+				/* var rel = $(this).attr('rel');
+				$('.panel-control').hide();
+				$('#' + rel).show(); */
+			
+			});
+});		
 			</script>
 
 </head>
 <body id="body">
+			
+		<div>
+			<c:if test="${fn:length(users) > 0}">
+			
+			<c:forEach var = "userData" items = "${users}" >
+			<td><c:out value="${usersData.firstName}"></c:out></td>
+			</c:forEach>
+			
+			</c:if>		
+			
+		</div>
+			
+
 <div id="dialog-form" title="Create new user">
-  <!-- <p class="validateTips">All form fields are required.</p> -->
 <form>
-<div class="container">
+<div class="container">	
 	<div class="row">
 	 <div class="form-group">
 	<div class="page-header" style="margin-left: 55px;">
-	
-	
-	
 	
 	<ul class="nav navbar-right">
 	
@@ -95,25 +151,23 @@ pageEncoding="ISO-8859-1"%>
        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 Settings <span class="caret"></span></a>
                 
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Change Password</a></li>
-                  <li><a href="#">Edit Profile</a></li>
-                  <li><a href="#">Logout</a></li>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <li role = "updatePassword"><a href="#" rel="passwordContainer">Change Password</a></li>
+                  <li role = "profile"><a href="javascript:void(0)" rel = "editProfile">Edit Profile</a></li>
+                  <li role="logout"><a href="javascript:void(0)" rel="logout">Logout</a></li>
+                  <li class="divider"></li>
+                  <li role="student"><a tabindex="-1"  href="javascript:void(0)" rel="student">My Student Profile</a>
+		                  <ul class="dropdown-menu">
+		   						<a href = "javascript:void(0)">Subjects</a>
+		   						<a href = "javascript:void(0)">Grades</a>
+		   						<a href = "javascript:void(0)">Sports Team</a>
+		    			  </ul>
+                  </li>
                 </ul>
               </li>
-                       
-  							
-                        <!-- <div class="input-group custom-search-form" style="width: 180px;">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div> -->
 	</ul>
 	
-  <div class="panel panel-default" style="float: left; ">
+<div class="panel panel-default" style="float: left; ">
   <div class="panel-heading">
     	<h3 class="panel-title">${messages}</h3>
     	<b><c:if test="${not empty emptyList}">
@@ -128,16 +182,11 @@ pageEncoding="ISO-8859-1"%>
     <h3 class="text-center login-title">Enter following information</h3>
     </div>
     
-    <%!
-    String theDate = "dash";
-	%>
-
     <%@include file="/leftmenutemplate.jsp"%>
     <div class="col-md-6">
+
      <div class="row">
-     
      <div>
-    
      		<c:out value="${result}"></c:out>
      </div>
      
@@ -150,6 +199,9 @@ pageEncoding="ISO-8859-1"%>
             	
             	<%@include file="/foodtemplate.jsp"%>
             	<%@include file="/coach.jsp"%>
+            	<%@include file="/update.jsp"%>
+            	<%@include file="/student.jsp"%>
+            	
             
             <div id="bmicalculator" class="panel-control">
             
@@ -198,8 +250,12 @@ pageEncoding="ISO-8859-1"%>
     </div>
     </div>
   </div>
-  
 </form>
+
+			
+
+				
+
 </div>
 </body>
 </html>

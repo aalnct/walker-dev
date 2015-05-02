@@ -20,14 +20,14 @@ pageEncoding="ISO-8859-1"%>
 <title>Welcome 
 <c:out value="${messages}"></c:out>
 </title>
-
 <style>
 </style>
 			<script type="text/javascript">
+			
 			$(document).ready(function(){
 
 				$('#saveCalculation').hide();
-				$('.panel-body').hide();
+				$('.panel-control').hide();
 				
 				
 				$('#bmi_calculate').click(function(e){
@@ -42,14 +42,8 @@ pageEncoding="ISO-8859-1"%>
 
 						success : function(result){
 							$('#bmiresult').val(result);
-							//alert(result);
+							
 						},
-						//dataType : 'Json',
-
-						/* beforeSend: function(xhr) {
-				            xhr.setRequestHeader("Accept", "application/json");
-				            xhr.setRequestHeader("Content-Type", "application/json");
-				        }, */
 						statusCode: {
 						    404: function(response) {
 						      alert('Page not found');
@@ -73,59 +67,102 @@ pageEncoding="ISO-8859-1"%>
 							'weight':$("#weight").val(),
 							'bmi' : $("#bmiresult").val()
 							},
+							success : function(result){
+								alert(result);
+							},
 					});
 				});
-			});
+				
+			/* dialog = $( "#dialog-form" ).dialog({
+				      autoOpen: false,
+				      height: 300,
+				      width: 350,
+				      modal: true,
+				    }); */
+				
+			$( ".dropdown-menu li a[rel=editProfile]" ).on( "click", function() {
+				      alert('test');
+				    });
+				
+			/* $("a[rel=editProfile]").on('click',function(){
+					$.get('/walker/admin_create_user.jsp',function(response){
+						$('#rightside').html(response);
+						});
+					}); */
+				
+				
+			$(".dropdown-menu li a[rel=passwordContainer]").on('click',function(){
+				var rel = $(this).attr('rel');
+				$('.panel-control').hide();
+				$('#' + rel).show();
+			
+			});	
+});		
 			</script>
 
 </head>
 <body id="body">
+			
+			
+			
+
 <div id="dialog-form" title="Create new user">
-  <!-- <p class="validateTips">All form fields are required.</p> -->
 <form>
-<div class="container">
+<div class="container">	
 	<div class="row">
 	 <div class="form-group">
-	<div class="page-header">
-	<ul class="nav navbar-nav navbar-right">
-                        <div class="input-group custom-search-form" style="width: 180px;">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
+	<div class="page-header" style="margin-left: 55px;">
+	
+	<ul class="nav navbar-right">
+	
+	<li class="dropdown">
+               
+       <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                Settings <span class="caret"></span></a>
+                
+                <ul class="dropdown-menu" role="menu">
+                  <li role = "updatePassword"><a href="#" rel="passwordContainer">Change Password</a></li>
+                  <li role = "profile"><a href="javascript:void(0)" rel = "editProfile">Edit Profile</a></li>
+                  <li role="logout"><a href="#">Logout</a></li>
+                </ul>
+              </li>
 	</ul>
-  <div class="panel panel-default" style="float: left;">
+	
+<div class="panel panel-default" style="float: left; ">
   <div class="panel-heading">
     	<h3 class="panel-title">${messages}</h3>
-    		
+    	<b><c:if test="${not empty emptyList}">
+    		${emptyList} 
+		    		
+    	</c:if></b>
   </div>
 </div>
-    
+   <div class="message" style="color: red;">
+   
+   </div>
     <h3 class="text-center login-title">Enter following information</h3>
     </div>
     
-    <%!
-    String theDate = "dash";
-	%>
-
     <%@include file="/leftmenutemplate.jsp"%>
     <div class="col-md-6">
+
      <div class="row">
-     
      <div>
-    
      		<c:out value="${result}"></c:out>
      </div>
+     
+     <c:out value="${Successfull}"></c:out>
      
      <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Health Chart</h3>
             </div>
+            	
             	<%@include file="/foodtemplate.jsp"%>
-            <div class="panelbmi">
+            	<%@include file="/coach.jsp"%>
+            	<%@include file="/update.jsp"%>
+            
+            <div id="bmicalculator" class="panel-control">
             
             <div class="panel-body">
             	<div class="form-group">
@@ -162,12 +199,7 @@ pageEncoding="ISO-8859-1"%>
                 	<input type="button" name = "bmi" id = "bmi_calculate" value = "Calculate" class="btn btn-lg btn-success"/>
                 	<input type="button" name = "saveCalculation" id = "saveCalculation" value = "Save" class="btn btn-lg btn-success" style="float: right; vertical-align: middle;"/>
                 </div>
-		      
-		      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-		      
-		      <!-- <div id="piechart" style="width: 900px; height: 500px;"></div> -->
 
-		      
             </div>
             </div>
           </div>
@@ -177,8 +209,12 @@ pageEncoding="ISO-8859-1"%>
     </div>
     </div>
   </div>
-  
 </form>
+
+			
+
+				
+
 </div>
 </body>
 </html>

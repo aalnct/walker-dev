@@ -9,31 +9,63 @@
 <link href="/walker/styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="/walker/styles/wysiwyg.css" rel="stylesheet" type="text/css" />
 <link href="/walker/styles/styles.css" rel="stylesheet" type="text/css" />
+<link href="/walker/styles/admintheme.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
 <style>
-	body{
-		background: grey;
-	}
+	
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Admin Users Login</title>
 		<style type="text/css">
 			login_btn{
 						border:background;
-						padding-bottom: 10cm;
+						padding-bottom: 20cm;
 						background-color: red;
 				}
-				validationMessage {
-						border:background;
-						padding-bottom: 10cm;
-						background-color: red;
-						font-family: cursive;
-				}
-				
 		</style>
+		
+		
+		<script type="text/javascript">
+				
+				$(function(){
+					var count = 0;
+					$('#adminlogin').click(function(event){
+						
+						if ($("#username").val().length == 0) {
+						   count ++;
+			               var error = $('<div/>').attr({"class" : "input_error" , "id" : 'error_'
+									+$(this).attr('name')}).html('Username is required');
+  	  							
+			               //$(this).after(error);
+			               alert('Please enter UserName');
+			            }
+						
+						if($("#password").val().length == 0){
+						count ++;
+			               var error = $('<div/>').attr({"class" : "input_error" , "id" : 'error_'
+									+$(this).attr('name')}).html('Password is required');
+	  							
+			               //$(this).after(error);
+			               alert('Please Enter Password also');
+						}
+						
+						if(count>0){
+							event.preventDefault();
+						}
+					});
+				});
+		
+		</script>
 
-</head>
+</head>				
+
 <body id="homepage">
-  		<form:form action="/walker/searchuser/" name="admin_login_form" commandName="admin_user" method="POST,GET">
+  		<form:form action="/walker/searchuser/" name="admin_login_form" commandName="admin_user" method="POST,GET" class="form-inline" role="form">
 			<c:if test="${messages != null}">
 				<c:out value="${messages}" ></c:out>
 			</c:if>
@@ -41,16 +73,33 @@
 			<c:if test="${logOutSessions != null}">
 				<c:out value="${logOutSessions}" ></c:out>
 			</c:if>
+
+<div class="container">
+    <div class="row colored">
+        <div id="contentdiv" class="contcustom">
+            <span class="fa fa-spinner bigicon"></span>
+            <h2>Admin Login</h2>
+            <div>
 			
-		<table align="center" border="1" cellspacing="2">
-			<tr>
-			<th>UserName:<input type="text" name="username" required="true"/></th></tr>
-			<tr><th>LastName:<input type="password" name="lastname" required="true"/></th>
-			</tr>
-		</table>
-			<div id="login_btn" align="center">
-				<input type="submit" name="admin" value="Submit" />
+					<div class="form-group">
+						<label for="name">UserName</label>
+						<input type="text" name="username"  id = "username" data-validate="require"/>
+					</div>
+					
+					<div class="form-group">
+							<label for="name" style="padding:10px;">Password</label>
+							<input type="password" name="lastname"  id = "password" data-validate="require"/>
+					</div>
+			
+		
+		
+			<div id="login_btn" align="center" style="padding-top: 20px;">
+				<input type="submit" name="admin" value="Submit" class="btn btn-success" id="adminlogin"/>
 			</div>
+		</div>
+        </div>
+    </div>
+</div>	
 	</form:form>
 			
 </body>

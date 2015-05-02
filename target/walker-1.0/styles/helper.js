@@ -9,14 +9,9 @@ function valdiated(){
 
 $(function(){ 
 	$("a[rel=createuser]").on('click',function(){
-		
 		$('#dynamicWrapper').remove();
-		
 		var dialog = $("<div/>").attr({"id":'dynamicWrapper'});
-		
 		dialog.appendTo('body');
-		
-		
 		$('#dynamicWrapper').dialog({
 			width:"700",
 			open:function(){

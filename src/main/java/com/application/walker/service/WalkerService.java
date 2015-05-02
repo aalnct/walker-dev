@@ -3,6 +3,7 @@ package com.application.walker.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,15 +37,18 @@ public class WalkerService {
 		return iWalkerDAO;
 	}
 	
-	//will pass this to controller
-	//@Transactional
-	public void addEmployee(User user){
+	public void addEmployee(User user) throws Exception {
 		if(iWalkerDAO == null){
 			iWalkerDAO = new WalkerDAO();
 			if(iLoginDao == null){
 				iLoginDao = new LoginDaoImpl();
 			}
 		}
+		
+		if(!user.getAddress().getCity().equals("NewYork")){
+				throw new Exception("City is not valid");
+		}
+		
 		getiWalkerDAO().addUser(user);
 	}
 	
@@ -53,8 +57,8 @@ public class WalkerService {
 		return user;
 	}
 	
-	public List<User> retireveUserbyUserName(List<String> username, List<String> lastname, List<String> emailid,String dob,Integer zip){
-		List<User> user = iWalkerDAO.retrieveUser(username,lastname,emailid,dob,zip);
+	public Set<User> retireveUserbyUserName(List<String> username, List<String> lastname, List<String> emailid,String dob,Integer zip){
+		Set<User> user = iWalkerDAO.retrieveUser(username,lastname,emailid,dob,zip);
 		return user;
 	}
 	//@Transactional
@@ -75,8 +79,8 @@ public class WalkerService {
 	}
 	
 	
-	public String saveCoachInformation(String name, String description){
-		String message = getiWalkerDAO().saveCoachData(name, description);
+	public String saveCoachInformation(String name, String coachEmailId,String description){
+		String message = getiWalkerDAO().saveCoachData(name,coachEmailId, description);
 		return message;
 	}
 	
@@ -103,6 +107,27 @@ public class WalkerService {
 	}
 	public void setiWalkerDAO(IWalkerDAO iWalkerDAO) {
 		this.iWalkerDAO = iWalkerDAO;
+	}
+	@Transactional
+	public String assignCoachtoUser(String coachName, String coachEmailId, String userName, String userEmailId){
+		
+		String assigned = null;
+		
+		assigned = getiWalkerDAO().assignCoachtoUser(coachName, coachEmailId, userName, userEmailId);
+		
+		return assigned;
+	}
+	
+	public User retrieveUserInformationForUpdate(Integer id){
+		
+		User user  = new User();
+		
+		if(!id.equals(null) || !id.equals(""))
+			 
+		user.setId(id);
+		User userTO = getiWalkerDAO().retrieveUserInformationForUpdate(id);
+		
+		return userTO;
 	}
 	
 }

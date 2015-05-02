@@ -11,6 +11,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "coach")
 public class Coach {
@@ -34,7 +38,20 @@ public class Coach {
 	@Column(name="description")
 	private String description;
 	
+	@Column(name="coach_email",nullable=false)
+	private String coachEmailId;
+	
+	public String getCoachEmailId() {
+		return coachEmailId;
+	}
+
+	public void setCoachEmailId(String coachEmailId) {
+		this.coachEmailId = coachEmailId;
+	}
+
 	@OneToMany(mappedBy="coach",fetch=FetchType.LAZY)
+	//this enables the lazy loading (it is enabled by default)
+	@Fetch(FetchMode.SELECT)
 	private List<User> user;
 	
 	public int getId() {

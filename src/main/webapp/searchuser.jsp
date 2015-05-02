@@ -10,17 +10,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script type="text/javascript" src='/walker/styles/functions.js'></script>
-
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
 <link href="/walker/styles/layout.css" rel="stylesheet" type="text/css" />
 <link href="/walker/styles/wysiwyg.css" rel="stylesheet" type="text/css" />
 <link href="/walker/styles/styles.css" rel="stylesheet" type="text/css" />
-
-<!-- <link href="/walker/styles/styles.css" rel="stylesheet" type="text/css" /> -->
 
 <title>Admin User Search Parameters</title>
 
@@ -74,7 +73,6 @@
 
 							$("a[rel=coachlist]").on('click',function(){
 								$.get('/walker/coachlist/',function(response){
-									//$('#rightside').html(response);
 										$('#coachTable').show();
 										$('#coachTable').append(response);
 									});
@@ -96,6 +94,13 @@
 									});
 								});
 							
+							
+							$('a[rel=assignCoach]').click(function(){
+									$.get('/walker/assignCoach.jsp',function(response){
+										$('#rightside').html(response);
+									});
+							});
+							
 						 });
 			</script>
 </head>
@@ -112,11 +117,7 @@
         	<li><img src="/walker/styles/icon_breadcrumb.png" alt="Location" /></li>
         	<li><strong>Location:</strong></li>
             
-            <li class="current">
-            <!-- <a href="javascript:void(0);" rel='add'>Add More Users to search</a> -->
-           
-            <!-- <a href="javascript:void(0);" rel='advance'>Advance Search</a> -->
-            </li>
+            
             <div id ="loader" style="float: right; margin: 0 10px; display:none">
             <img src="/walker/styles/loading.gif" alt="Loading"/>
             </div>
@@ -126,6 +127,11 @@
        
         </ul>
     </div>
+    
+    			
+    			
+    			
+    
 			<div id="rightside" style= "margin-top:0px;">
 			<c:out value="${message}"></c:out>
 			<div class="contentcontainer" style= "margin:0px 0 10px 0; float:left;">
@@ -250,6 +256,7 @@
                 	 <!-- to do -->
                 	 <li><a href="javascript:void(0)" title = "Coach" rel="coachlist">Coaches</a></li>
                     <li><a href="javascript:void(0)" title = "Coach" rel="coachinformation">Enter New Coach Information</a></li>
+                    <li><a href="javascript:void(0)" title = "Coach" rel="assignCoach">Assign Coach to Member</a></li>
                     <!-- to do end -->
                     
                 </ul>
@@ -257,8 +264,6 @@
             	
             </li>
         </ul>
-        		
-        		
         		<table id="coachTable">
         			<tr>
         				<th>Name</th>

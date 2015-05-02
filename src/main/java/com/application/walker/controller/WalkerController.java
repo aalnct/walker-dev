@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.application.walker.service.Address;
 import com.application.walker.service.Coach;
+import com.application.walker.service.Student;
 import com.application.walker.service.User;
 import com.application.walker.service.WalkerCalculation;
 import com.application.walker.service.WalkerService;
@@ -97,7 +99,12 @@ public class WalkerController implements Serializable{
 			walkerService = new WalkerService();
 		}
 		
-		getWalkerService().addEmployee(user);
+		try {
+			getWalkerService().addEmployee(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		model.setViewName("registrationSuccessfull");
 		return model;
@@ -109,7 +116,7 @@ public class WalkerController implements Serializable{
 		int result = getWalkerService().deletingUserInformation(id,user);
 			
 			ModelAndView model = new ModelAndView();
-			model.setViewName("deleteuser");
+			model.setViewName("deleteuser"); 
 			//model.addObject("result", result);
 			
 		return "user information is deleted";
@@ -149,9 +156,9 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value="/saveCoach/", method = RequestMethod.POST)
-	private String saveCoachInformation(@RequestParam String name, @RequestParam String description){
+	private String saveCoachInformation(@RequestParam String name, @RequestParam String coachEmailId, @RequestParam String description){
 		//Calling service
-		getWalkerService().saveCoachInformation(name, description);
+		getWalkerService().saveCoachInformation(name, coachEmailId,description);
 		System.out.println("Saving coach information");
 		String Message = "user information is saved";
 		return Message;
@@ -164,4 +171,33 @@ public class WalkerController implements Serializable{
 		List<String> coachList = getWalkerService().getAllCoach();
 		return coachList.toString();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/assignCoach",method = RequestMethod.POST)
+	private String assignCoachtoUser(@RequestParam String coachName,@RequestParam String coachEmail,@RequestParam String
+			userName, @RequestParam String useremail){
+		
+		System.out.println("Assign coach to user");
+		
+		String response = getWalkerService().assignCoachtoUser(coachName, coachEmail, userName, useremail);
+		
+		return response;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateUserInformation/", method = RequestMethod.GET)
+	private String retrieveUserInformation(@RequestParam Integer id){
+		User user=getWalkerService().retrieveUserInformationForUpdate(id);
+		ModelAndView model = new ModelAndView();
+		model.addObject("users", user);
+		model.setViewName("success");
+		return user.toString();
+	}
+	
+	@RequestMapping(value="/student" ,method=RequestMethod.POST)
+	private void saveStudent(@ModelAttribute Student student){
+		System.out.println("calling student information to save");
+	}
 }
+
+
