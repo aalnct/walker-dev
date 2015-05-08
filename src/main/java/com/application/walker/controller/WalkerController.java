@@ -112,19 +112,19 @@ public class WalkerController implements Serializable{
 
 	@RequestMapping(value = "/deleteuser/{id}", method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	private String deleteuser(@PathVariable("id") int id,User user) throws Exception{
-		int result = getWalkerService().deletingUserInformation(id,user);
+	public String deleteuser(@PathVariable("id") int id,User user) throws Exception{
+		
+		getWalkerService().deletingUserInformation(id,user);
 			
 			ModelAndView model = new ModelAndView();
 			model.setViewName("deleteuser"); 
-			//model.addObject("result", result);
-			
+
 		return "user information is deleted";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/calculateBMI/",method={RequestMethod.GET,RequestMethod.POST})
-	private String calculateBMI(@RequestParam int age,@RequestParam Double height,@RequestParam float weight){
+	public String calculateBMI(@RequestParam int age,@RequestParam Double height,@RequestParam float weight){
 		//passing the request to service
 		Double result = getWalkerCalculation().bmiCalculation(age, height, weight);
 		ModelAndView modelandview = new ModelAndView();
@@ -137,7 +137,7 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value="/savebmi/",method={RequestMethod.GET,RequestMethod.POST})
-	private String saveBMIUser(HttpServletRequest request, @RequestParam Integer id,@RequestParam int age,
+	public String saveBMIUser(HttpServletRequest request, @RequestParam Integer id,@RequestParam int age,
 			@RequestParam Double height, @RequestParam float weight,@RequestParam float bmi){
 		health h = new health();
 		
@@ -156,7 +156,7 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value="/saveCoach/", method = RequestMethod.POST)
-	private String saveCoachInformation(@RequestParam String name, @RequestParam String coachEmailId, @RequestParam String description){
+	public String saveCoachInformation(@RequestParam String name, @RequestParam String coachEmailId, @RequestParam String description){
 		//Calling service
 		getWalkerService().saveCoachInformation(name, coachEmailId,description);
 		System.out.println("Saving coach information");
@@ -166,7 +166,7 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value="/coachlist/")
-	private String getCoachList(){
+	public String getCoachList(){
 		System.out.println("Getting list of all coaches");
 		List<String> coachList = getWalkerService().getAllCoach();
 		return coachList.toString();
@@ -174,7 +174,7 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value = "/assignCoach",method = RequestMethod.POST)
-	private String assignCoachtoUser(@RequestParam String coachName,@RequestParam String coachEmail,@RequestParam String
+	public String assignCoachtoUser(@RequestParam String coachName,@RequestParam String coachEmail,@RequestParam String
 			userName, @RequestParam String useremail){
 		
 		System.out.println("Assign coach to user");
@@ -186,7 +186,7 @@ public class WalkerController implements Serializable{
 	
 	@ResponseBody
 	@RequestMapping(value = "/updateUserInformation/", method = RequestMethod.GET)
-	private String retrieveUserInformation(@RequestParam Integer id){
+	public String retrieveUserInformation(@RequestParam Integer id){
 		User user=getWalkerService().retrieveUserInformationForUpdate(id);
 		ModelAndView model = new ModelAndView();
 		model.addObject("users", user);
@@ -195,7 +195,7 @@ public class WalkerController implements Serializable{
 	}
 	
 	@RequestMapping(value="/student" ,method=RequestMethod.POST)
-	private void saveStudent(@ModelAttribute Student student){
+	public void saveStudent(@ModelAttribute Student student){
 		System.out.println("calling student information to save");
 	}
 }

@@ -145,7 +145,6 @@ pageEncoding="ISO-8859-1"%>
 	<div class="page-header" style="margin-left: 55px;">
 	
 	<ul class="nav navbar-right">
-	
 	<li class="dropdown">
                
        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -156,13 +155,38 @@ pageEncoding="ISO-8859-1"%>
                   <li role = "profile"><a href="javascript:void(0)" rel = "editProfile">Edit Profile</a></li>
                   <li role="logout"><a href="javascript:void(0)" rel="logout">Logout</a></li>
                   <li class="divider"></li>
-                  <li role="student"><a tabindex="-1"  href="javascript:void(0)" rel="student">My Student Profile</a>
-		                  <ul class="dropdown-menu">
-		   						<a href = "javascript:void(0)">Subjects</a>
+                  <li class = "dropdown-submenu pull-left" role="student"><a tabindex="-1"  href="javascript:void(0)" rel="student">My Student Profile</a>
+		                  
+		                  
+		                  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+  
+  						<li class="dropdown-submenu">
+					    <a tabindex="-1" href="#">More options</a>
+					    <ul class="dropdown-menu">
+					      
+					    </ul>
+					  </li>
+							</ul>
+		                  
+		                  
+		                  
+		                  
+		                  
+		                  
+		             <!--      
+		               <ul class="dropdown-menu">
+		                  <li class = "dropdown-submenu">
+		   						<a href = "javascript:void(0)">Student</a>
+		   					</li>
+		   					<li class = "dropdown-submenu">
 		   						<a href = "javascript:void(0)">Grades</a>
+		   					</li>
+		   					<li class = "dropdown-submenu">
 		   						<a href = "javascript:void(0)">Sports Team</a>
-		    			  </ul>
+		   					</li>
+		    			</ul> -->
                   </li>
+                
                 </ul>
               </li>
 	</ul>

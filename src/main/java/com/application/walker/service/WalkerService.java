@@ -44,7 +44,7 @@ public class WalkerService {
 				iLoginDao = new LoginDaoImpl();
 			}
 		}
-		
+		//just to test exception in Junit.
 		if(!user.getAddress().getCity().equals("NewYork")){
 				throw new Exception("City is not valid");
 		}
@@ -62,9 +62,8 @@ public class WalkerService {
 		return user;
 	}
 	//@Transactional
-	public int deletingUserInformation(int id,User user) throws Exception {
-		int result = iWalkerDAO.deleteUser(id,user);
-		return result;
+	public void deletingUserInformation(int id,User user) throws Exception {
+		iWalkerDAO.deleteUser(id,user);
 		
 	}
 	//@Transactional
@@ -91,7 +90,7 @@ public class WalkerService {
 		
 		for(Coach coach1 : coachList){
 			
-			if(coachList.isEmpty()){
+			if(coachList.isEmpty()){ 
 			Coach coach = new Coach();
 			coach.setMessage("No data  found");
 			//return coach;

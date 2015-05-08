@@ -172,9 +172,8 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 	}
 
 	@Override
-	public int deleteUser(int id, User user) throws Exception {
+	public void deleteUser(int id, User user) throws Exception {
 
-		int result = 0;
 		Transaction tx = null;
 		SessionFactory sessionFactory = WalkerUtil.getSession();
 		Session session = sessionFactory.openSession();
@@ -193,7 +192,6 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 			throw new Exception(
 					"Session cannot be established, please try again later. Thanks for your patience");
 		}
-		return result;
 	}
 
 	private Set<User> returnAllUsers() {

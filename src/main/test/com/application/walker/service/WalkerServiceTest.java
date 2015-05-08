@@ -2,6 +2,10 @@ package com.application.walker.service;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,6 +74,26 @@ public class WalkerServiceTest {
 		Mockito.doNothing().when(walkerDAO).addUser(user);
 		service.addEmployee(user);
 		
+	}
+	
+	@Test
+	public void retireveUserbyUserNameTest(){
+		List<String> username = null;
+		List<String> lastname = null;
+		List<String> emailid = null;
+		String dob = "09/22/1986";
+		
+		Integer zip = 3038;
+		user.setUsername("aalnct");
+		user.setLastName("Agarwal");
+		user.setEmailAddress("aalnct@gmail.com");
+		user.setDob(dob);
+		user.setAddress(address);
+		user.getAddress().setZipcode(zip);
+		
+		Set<User> userSet = new HashSet<User>();
+		
+		Mockito.when(walkerDAO.retrieveUser(username,lastname,emailid,dob,zip)).thenReturn(userSet);
 	}
 
 }

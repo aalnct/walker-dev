@@ -62,9 +62,9 @@ public class LoginController {
 		String message = null;
 		User user = getWalkerService().loginUser(username,lastname);
 		if(user == null){
-			message = "User Record not found";
 			model.addObject("messages", message);
-			model.setViewName("admin");
+			model.setViewName("login");
+			return model;
 		}
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();

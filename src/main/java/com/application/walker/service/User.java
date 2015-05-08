@@ -34,8 +34,16 @@ public class User implements java.io.Serializable {
 	private String dob;
 	private String emailAddress;
 	private Creditcard creditcard;
+	private String message;
 	
-	
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	@JoinColumn(name = "coach_id")
 	private Coach coach;

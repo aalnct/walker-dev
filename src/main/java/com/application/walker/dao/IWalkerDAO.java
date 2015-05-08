@@ -27,7 +27,7 @@ public interface IWalkerDAO {
 	/*
 	 * delete user based on the given user id
 	 */
-	public int deleteUser(int id,User user) throws Exception;
+	public void deleteUser(int id,User user) throws Exception;
 	
 	/*
 	 * Save user bmi information, command name health object

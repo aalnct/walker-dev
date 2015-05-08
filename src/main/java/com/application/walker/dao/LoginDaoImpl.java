@@ -6,6 +6,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.application.walker.exception.WalkerException;
 import com.application.walker.service.User;
 
 /**
@@ -15,8 +16,13 @@ import com.application.walker.service.User;
  */
 
 @Repository
-public class LoginDaoImpl implements iLoginDao {
+public class LoginDaoImpl implements iLoginDao  {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public User loginUser(String username, String lastname) {
 		
@@ -29,9 +35,14 @@ public class LoginDaoImpl implements iLoginDao {
 				user = (User) session.createCriteria(User.class).add(Restrictions.and(Property.forName("username").eq(username),
 															Property.forName("lastName").eq(lastname))).uniqueResult();
 		
-			if(user ==null){
-				throw new NullPointerException("User not found");
-			}
+			if(user == null){
+				try {
+					throw new WalkerException("User Cannot be found with the given credentials");
+				} catch (WalkerException e) {
+					e.getMessage();
+					e.printStackTrace();
+				}
+			} 
 		
 		}
 		return user;
