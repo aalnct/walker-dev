@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.application.walker.dao.WalkerDAOOperations;
+import com.application.walker.service.State;
 import com.application.walker.service.User;
 import com.application.walker.service.WalkerService;
 
@@ -56,11 +57,11 @@ public class LoginController {
 	}
 
 	@RequestMapping(params = "login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam String username, @RequestParam String lastname){
+	public ModelAndView login(@RequestParam String UserName, @RequestParam String LastName){
 		ModelAndView model = new ModelAndView("success");
 		System.out.println("logged in");
 		String message = null;
-		User user = getWalkerService().loginUser(username,lastname);
+		User user = getWalkerService().loginUser(UserName,LastName);
 		if(user == null){
 			model.addObject("messages", message);
 			model.setViewName("login");
@@ -87,7 +88,8 @@ public class LoginController {
 			model.addObject("messages", message);
 			model.setViewName("admin");
 		}
-		String user1 = user.getUsername();
+		String user1 = username;
+		//String user1 = user.getUsername();
 		model.addObject("messages", user1);
 		model.setViewName("searchuser");
 		
@@ -176,4 +178,17 @@ public class LoginController {
 		modelandView.setViewName("retrieveHistory");
 		return modelandView;
 	}
+	
+	@RequestMapping(value="/statelist",method = {RequestMethod.GET})
+	private ModelAndView stateList(){
+		String countryName = null;
+		System.out.println("state list");
+		List <State> stateList = getWalkerService().retriveStateList(countryName);
+		ModelAndView model = new ModelAndView();
+		model.addObject("state", stateList);
+		model.setViewName("CreateUser");
+		
+		return model;
+	}
+	
 }

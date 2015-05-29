@@ -100,6 +100,29 @@
 										$('#rightside').html(response);
 									});
 							});
+
+							
+							/* $(' nav div a[rel=college-registration]').click(function(){
+								$.get('/walker/college.jsp',function(response){
+									alert('test');
+								});
+						}); */
+							
+							
+							$('nav div a[rel=college-registration]').click(function(response){
+								$.ajax({
+									type: 'post',
+									url: '/walker/college',
+									success:function(response){
+										alert('Please wait while you been redirected to College Website');
+									},
+									complete: function() {
+								        window.location.replace('/walker/college.jsp');
+								      },
+								});
+								
+							});
+							
 							
 						 });
 			</script>
@@ -111,11 +134,29 @@
 		
 	</div>
 	<!-- top bread crumb -->
+	
+	
 	<table>
 	<div id="breadcrumb">
     	<ul>	
         	<li><img src="/walker/styles/icon_breadcrumb.png" alt="Location" /></li>
-        	<li><strong>Location:</strong></li>
+        	<li><strong>Home/</strong></li>
+            
+            
+	<nav class = "navbar navbar-default pul-right">
+		<div class = "container-fluid">
+					<div class="navbar-header active btn-info">
+							<a class="navbar-brand btn btn-link" href="javascript:void(0);">Details</a>
+							<a class = "navbar-brand btn btn-link" href="javascript:void(0);" rel="college-registration">College</a>
+							<a class = "navbar-brand btn btn-link" href="javascript:void(0);" rel="Sports Event Registration">Sports</a>
+							<a class = "navbar-brand btn btn-link" href="javascript:void(0);" rel = "Prize Winner">Topper Details</a>
+					</div>
+		</div>
+						
+	</nav>
+            
+            
+            
             
             
             <div id ="loader" style="float: right; margin: 0 10px; display:none">

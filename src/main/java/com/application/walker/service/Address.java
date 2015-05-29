@@ -20,7 +20,7 @@ public class Address implements java.io.Serializable {
 	private String city;
 	private String state;
 	private Integer zipcode;
-	private Set users = new HashSet(0);
+	//private Set users = new HashSet(0);
 
 	public Address() {
 	}
@@ -34,7 +34,7 @@ public class Address implements java.io.Serializable {
 		this.city = city;
 		this.state = state;
 		this.zipcode = zipcode;
-		this.users = users;
+		//this.users = users;
 	}
 
 	public Integer getId() {
@@ -93,12 +93,12 @@ public class Address implements java.io.Serializable {
 		this.zipcode = zipcode;
 	}
 
-	public Set getUsers() {
-		return this.users;
-	}
-
-	public void setUsers(Set users) {
-		this.users = users;
-	}
+//	public Set getUsers() {
+//		return this.users;
+//	}
+//
+//	public void setUsers(Set users) {
+//		this.users = users;
+//	}
 
 }

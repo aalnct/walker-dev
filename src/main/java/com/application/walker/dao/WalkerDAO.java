@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
@@ -23,15 +24,17 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.application.walker.exception.WalkerException;
 import com.application.walker.service.Address;
 import com.application.walker.service.Coach;
+import com.application.walker.service.State;
 import com.application.walker.service.User;
 import com.application.walker.service.health;
 
 //this class will handle all the database related functionality
 
 @Repository
-public class WalkerDAO implements IWalkerDAO, Serializable {
+public class WalkerDAO<T> implements IWalkerDAO, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -246,6 +249,7 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 		return response;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String saveCoachData(String name, String coachEmailId,
 			String description) {
@@ -258,7 +262,7 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 		coach.setDescription(description);
 
 		try {
-
+ 
 			List<Query> queryForCoach = session
 					.createQuery(
 							"from Coach c where c.coachEmailId = :coachEmailId")
@@ -277,10 +281,14 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 			try {
 
 				if (session != null) {
+					session.clear();
 					session.close();
+				
 				}
 			} catch (HibernateException e) {
+				transaction.rollback();
 				e.printStackTrace();
+				
 				throw new RuntimeException(
 						"failed to close session, Check your configurations");
 			}
@@ -371,25 +379,84 @@ public class WalkerDAO implements IWalkerDAO, Serializable {
 	public User retrieveUserInformationForUpdate(Integer id) {
 		
 		session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(User.class).add(Restrictions.idEq(id));
 		
-		User user = (User)criteria.uniqueResult();
+//		Criteria criteria = session.createCriteria(User.class).add(Restrictions.idEq(id));
+//		criteria.setFetchMode("address", FetchMode.JOIN);
+//		User user = (User)criteria.uniqueResult();
+		
+		User user = (User) session.load(User.class, id);
+		
+		System.out.println(System.getProperty("java.io.tmpdir"));
 		
 		try{
 			
-			if(session != null){
-				//removing information from saved session cache -- other way can be using evict (session.evict())
+			if(session != null){ //clearing the session and then closing it
 				session.clear();
 				session.close();
-			
 			}
+		
+			
 			
 		}catch(HibernateException exception){
 			exception.getMessage();
 			exception.printStackTrace();
 		}
 		
+		
+		Session anothersession = sessionFactory.openSession();
+		user = (User) anothersession.load(User.class, id); 
+		System.out.println(user.getFirstName());
+		
 		return user;
 	}
 
+	@Override
+	public List<State> retriveStateList() {
+		session = getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(State.class);
+		
+		List<State> stateList = criteria.list();
+		
+		if(stateList.size()>0){
+				return stateList;
+		}
+		return null;
+	}
+
+	@Override
+	public void updateUserProfile(User user,Address address) {
+			session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(User.class).add(Restrictions.idEq(user.getId()));
+			criteria.setFetchMode("address", FetchMode.JOIN);
+			Transaction transaction = null;
+			
+			user = (User)criteria.uniqueResult();
+			
+			if(!user.equals("") || !user.equals(null)){
+				session.merge(user);
+				session.merge(address);
+			
+			
+			transaction = session.beginTransaction();
+			transaction.commit();
+			try{	
+			if(session!=null){
+				session.clear();
+				session.close();
+			
+				}
+		}
+				
+			
+			catch(HibernateException exception){
+				transaction.rollback();
+				System.out.println("Cannot perform operation");
+				exception.printStackTrace();
+			}
+			}
+			
+			
+			
+	}
 }
+

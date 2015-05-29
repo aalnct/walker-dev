@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.application.walker.service.Address;
-import com.application.walker.service.Coach;
+import com.application.walker.service.IWalkerStudentService;
 import com.application.walker.service.Student;
 import com.application.walker.service.User;
 import com.application.walker.service.WalkerCalculation;
 import com.application.walker.service.WalkerService;
 import com.application.walker.service.health;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author amit agarwal
@@ -39,11 +42,17 @@ public class WalkerController implements Serializable{
 	/**
 	 * 
 	 */
+	
+	
+	
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private WalkerService walkerService;
 	@Autowired
 	private WalkerCalculation walkerCalculation;
+	
+	@Autowired
+	private IWalkerStudentService iStudentService;
 	
 	public WalkerCalculation getWalkerCalculation() {
 		return walkerCalculation;
@@ -59,6 +68,15 @@ public class WalkerController implements Serializable{
 
 	public WalkerController(){
 		
+	}
+	
+	//handles mapping from landing page to  welcome page
+	 @RequestMapping(value="/home", method =RequestMethod.GET)
+	    public ModelAndView displayHomePageEvent(HttpServletRequest request, HttpServletResponse response) {
+		 ModelAndView modelandview = new ModelAndView();
+		 modelandview.setViewName("welcomeuser");
+		  return modelandview;
+
 	}
 	
 	@RequestMapping(params = "submit",method={RequestMethod.POST,RequestMethod.GET})
@@ -184,6 +202,12 @@ public class WalkerController implements Serializable{
 		return response;
 	}
 	
+	
+//	StringBuilder strBuilder = new  StringBuilder();
+//	strBuilder.append(" 'firstName': '" + user.getFirstName() + "' ,'lastName': '" +   user.getLastName() + " ' ");
+//JSONObject.fromObject(user).toString()
+//return strBuilder.toString();
+	
 	@ResponseBody
 	@RequestMapping(value = "/updateUserInformation/", method = RequestMethod.GET)
 	public String retrieveUserInformation(@RequestParam Integer id){
@@ -191,12 +215,41 @@ public class WalkerController implements Serializable{
 		ModelAndView model = new ModelAndView();
 		model.addObject("users", user);
 		model.setViewName("success");
-		return user.toString();
+		
+		GsonBuilder gSonBuilder = new GsonBuilder();
+		//Gson gson = gSonBuilder.registerTypeAdapter(User.class,new User());
+		Gson gson  = new Gson();
+		gson.toJson(user);
+		return gson.toJson(user).toString();
 	}
 	
-	@RequestMapping(value="/student" ,method=RequestMethod.POST)
-	public void saveStudent(@ModelAttribute Student student){
-		System.out.println("calling student information to save");
+	@RequestMapping(value="/details" ,method=RequestMethod.POST)
+	public ModelAndView saveStudent(@ModelAttribute("student") Student student){
+		student = iStudentService.saveStudentDetails(student);
+		
+		ModelAndView model = new ModelAndView();
+		
+		if(student != null){
+			model.setViewName("student");
+			return model;
+		}
+		
+		else{
+			student = new Student();
+			Integer identifier = student.getIdentifier();
+			model.addObject(identifier.toString(),student.getName());
+			model.setViewName("student");
+			return model;
+		}
+	}
+	
+	@RequestMapping(value="/updateprofile" ,method=RequestMethod.POST)
+	public ModelAndView updateProfile(@ModelAttribute("user") User user,Address address){
+		getWalkerService().updateUserProfile(user,address);
+		ModelAndView model = new ModelAndView();
+		model.setViewName("success");
+		return model;
+		
 	}
 }
 

@@ -27,11 +27,11 @@
         <property name="zipcode" type="java.lang.Integer">
             <column name="zipcode" />
         </property>
-        <set name="users" table="user" cascade="all" inverse="true" lazy="true" fetch="select">
+       <!--  <set name="users" table="user" cascade="all" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="address_id" not-null="true" />
             </key>
             <one-to-many class="com.application.walker.service.User"/>
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>

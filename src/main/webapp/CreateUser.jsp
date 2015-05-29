@@ -6,6 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -48,7 +49,7 @@
   			      showButtonPanel: true
   			    });
   			    //for tooltip
-    			 $( document ).tooltip();  		
+    			 //$( document ).tooltip();  		
 					//for dropdown
     			 $("select[name=list_country]").change(function(){
  					if($(this).val() == "india"){
@@ -63,7 +64,6 @@
  						$("select[name=list_state_india]").hide();
  					}
  				});	 
-					//$('form[name=registerationform]').submit(function(){
    				   $('#registerationform').submit(function(){
    	   				   		var count=0;
    	   				   		$('#registerationform [data-validate^="require"]').each(function(){
@@ -75,8 +75,7 @@
    	   	   				   				switch(validate[i]){
 		   	   	   				   				case 'require':
 		   	   	   	   				   				if(!$(this).val()){
-			   	   	   	   				   				//alert('check validation');
-		   	   	   	   	   				   						count++;
+			   	   	   	   				   						count++;
 						   	   		   	   	   				 	var error = $('<div/>').attr({"class" : "input_error" , "id" : 'error_'
 						   	  									+$(this).attr('name')}).html('Field is required');
 								   	  							$(this).after(error);
@@ -188,13 +187,17 @@
 				 -->
 				<tr>
 				<th align="left"></th>
-				<td>	<select name="list_state_usa" style = "display:none;" >
-						<option value="state">Please select state</option>
-						<option value="Georgia">Georgia</option>
-						<option value="Illinois">Illinois</option>
+				
+				<td>
+				<select name="list_state_usa" style = "display:none;" >
+				
+				<c:forEach var="stateList" items="${state}">
+					<option value="state"><c:out value="${stateList.stateName}"></c:out></option>
+						 </c:forEach>
+					<!--	<option value="Illinois">Illinois</option>
 						<option value="NewYork">NewYork</option>
-						<option value="Delaware">Delaware</option>
-	  				</select>	
+						<option value="Delaware">Delaware</option> -->
+	  			</select>	
 				</td>
 				</tr>
 				

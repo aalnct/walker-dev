@@ -15,9 +15,13 @@
        	<property name="hibernate.connection.autocommit">true</property>
         
         
-        <!-- <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
+        <property name="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</property>
         <property name="hibernate.cache.use_second_level_cache">true</property>
-        <property name="hibernate.cache.use_query_cache">true</property> -->
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <property name="net.sf.ehcache.configurationResourceName">ehcache.xml</property>
+        
+        
+        
         
         <!-- this will disable the second level cahce -->
         <!-- <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider
@@ -34,6 +38,8 @@
         <mapping resource="Creditcard.hbm.xml"/>
         <mapping class="com.application.walker.service.health"/>
     	<mapping class="com.application.walker.service.Coach"/>
+    	<mapping class="com.application.walker.service.Student"/>
+    	<mapping class="com.application.walker.service.State"/>
     </session-factory>
     
 </hibernate-configuration>

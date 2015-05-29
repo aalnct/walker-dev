@@ -58,6 +58,12 @@
 							event.preventDefault();
 						}
 					});
+					
+					
+					$('div a[rel=home]').on('click',function(){
+						window.location.replace("/walker/welcomeuser.jsp");
+					});
+					
 				});
 		
 		</script>
@@ -76,6 +82,12 @@
 				<c:out value="${logOutSessions}" ></c:out>
 			</c:if>
 		</div>
+		
+		<div>
+			<a href="javascript:void(0);" rel = "home">Home</a>
+		</div>
+		
+		
 <div class="container">
     <div class="row colored">
         <div id="contentdiv" class="contcustom">

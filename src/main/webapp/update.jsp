@@ -13,13 +13,19 @@
 										
 										});
 								});
+								
+								
+								$('#cancel').click(function(){
+									$(".form-control").val("");
+								});
+								
 						});
-				
+						
 				</script>
 	<form:form action="" method="Post" commandName="User" >
             	<div class="form-group">
             		<label>
-           					Please update your password
+           					Please update your Details
             		</label>
             	</div>
             	
@@ -33,7 +39,7 @@
             	
             	<div class = "form-group" style="padding: 10px;">
             		<input type = "button" value = "Update" class="btn btn-lg btn-success" id = "updatepsswd">
-            		<input type = "button" value = "Cancel" class="btn btn-lg btn-warning pull-right">
+            		<input type = "button" id = "cancel" value = "Cancel" class="btn btn-lg btn-warning pull-right">
             		
             	</div>
       </form:form>

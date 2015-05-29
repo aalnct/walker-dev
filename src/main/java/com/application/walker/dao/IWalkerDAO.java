@@ -7,7 +7,9 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import com.application.walker.service.Address;
 import com.application.walker.service.Coach;
+import com.application.walker.service.State;
 import com.application.walker.service.User;
 import com.application.walker.service.health;
 @Component
@@ -62,5 +64,14 @@ public interface IWalkerDAO {
 	
 	public User retrieveUserInformationForUpdate(Integer id);
 	
+	/*
+	 * Retrieving  stateList
+	 */
 	
+	public List<State> retriveStateList();
+	
+	/*
+	 * method to update user profile
+	 */
+	public void updateUserProfile(User user,Address address);
 }

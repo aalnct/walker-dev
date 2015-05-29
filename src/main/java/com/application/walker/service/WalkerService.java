@@ -83,25 +83,25 @@ public class WalkerService {
 		return message;
 	}
 	
-	public List<String> getAllCoach(){
+	public List<String> getAllCoach() {
 		List<String> coachStringList = new ArrayList<String>();
 
-		List<Coach> coachList =  getiWalkerDAO().getListofCoach();
-		
-		for(Coach coach1 : coachList){
-			
-			if(coachList.isEmpty()){ 
-			Coach coach = new Coach();
-			coach.setMessage("No data  found");
-			//return coach;
-		
-		}
+		List<Coach> coachList = getiWalkerDAO().getListofCoach();
+
+		for (Coach coach1 : coachList) {
+
+			if (coachList.isEmpty()) {
+				Coach coach = new Coach();
+				coach.setMessage("No data  found");
+				// return coach;
+
+			}
 
 			coachStringList.add(coach1.getName());
 			coachStringList.add(coach1.getDescription());
 			coachStringList.add(Integer.toString(coach1.getId()));
 		}
-		
+
 		return coachStringList;
 	}
 	public void setiWalkerDAO(IWalkerDAO iWalkerDAO) {
@@ -127,6 +127,32 @@ public class WalkerService {
 		User userTO = getiWalkerDAO().retrieveUserInformationForUpdate(id);
 		
 		return userTO;
+	}
+	
+	public List<State> retriveStateList(String countryName){
+		
+		List<State> completeStateList = null;
+		
+		//check to see if country name is coming as null
+		
+		if(null == countryName){
+			//get the complete state list for all the countries
+			completeStateList = iWalkerDAO.retriveStateList();
+			
+						
+			return completeStateList;
+		}
+		
+		return null;
+	}
+	
+	public void updateUserProfile(User user,Address address){
+		
+		if(!user.getUsername().equals(null) || user !=null){
+			user.setAddress(address);
+			getiWalkerDAO().updateUserProfile(user,address);
+		}
+		
 	}
 	
 }

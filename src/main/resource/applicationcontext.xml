@@ -18,30 +18,16 @@
       <context:component-scan base-package="com.application.walker"/>  
       
       <mvc:resources mapping="/styles/**" location="/styles/"/>
-      
-      <!-- <bean id="walkerController" class="com.application.walker.controller.WalkerController">
-      		<property name="walkerService" ref="walkerService"></property>
-      		<property name="walkerCalculation" ref="walkerCalculation"></property>
-      		
-      </bean>  
-      
-      <bean id="loginController" class="com.application.walker.controller.LoginController">
-      		<property name="walkerService" ref="walkerService"></property>
-      </bean> -->
-      
-      <!-- <bean id = "logindao" class= "com.application.walker.dao.LoginDaoImpl">
-      </bean> -->
-      
       <tx:annotation-driven/>
       
        <bean id="walkerService" class="com.application.walker.service.WalkerService">
       	<property name="iWalkerDAO" ref="walkerDAO"></property>
       </bean>
       
+      <!-- Hibernate configuration for database -->
       
       <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-    	<!-- <property name="dataSource" ref = "dataSource"></property> -->
-		<property name="configLocation">    
+    	<property name="configLocation">    
         <value>
             /WEB-INF/classes/hibernate.cfg.xml
         </value>
@@ -57,25 +43,28 @@
       <bean id="walkerDAO" class="com.application.walker.dao.WalkerDAO">
       	<property name="sessionFactory" ref="sessionFactory"></property>
       </bean>
-		
-	<!-- <bean id="walkerUtil" class="com.application.walker.dao.WalkerUtil">
-		</bean>
+      
+	<!-- database properties file -->
+	<!-- Spring configuration for database -->
 	
-	<bean id="walkerOperation" class="com.application.walker.dao.WalkerDAOOperations">
-		</bean>
-		
-	<bean id="walkerCalculation" class="com.application.walker.service.WalkerCalculation">
-	</bean> -->	
-		
-	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="configLocation">    
-        <value>
-            /WEB-INF/classes/hibernate.cfg.xml
-        </value>
-    </property>
-	</bean> -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+ 
+		<property name="location">
+			<value>/WEB-INF/databaseconfiguration.properties</value>
+		</property>
+	</bean>      
+      
+      <!-- College DataSource -->
 	
-	
-	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+			    <property name="driverClassName" value="${driverclass.name}" />
+			    <property name="url" value="${database.url}" />
+			    <property name="username" value="${database.username}" />
+			    <property name="password" value="${database.password}" />
+			    <property name="initialSize" value="3" />
+			    <property name="maxActive" value="10" />
+  </bean>
+  
 	
 </beans>

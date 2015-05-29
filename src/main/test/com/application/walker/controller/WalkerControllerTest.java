@@ -103,19 +103,16 @@ public class WalkerControllerTest {
 		String message  = walkerController.saveCoachInformation(name, coachEmailId, description);
 		assertEquals("user information is saved", message);
 	}
-//	@Test
-//	public void getCoachListTest(){
-//		String coachTest = null;
-//		List<String> coachList= new ArrayList<String>();
-//		
-//		coachTest = walkerController.getCoachList();
-//		
-//		coachList.add(coachTest);
-//			
-//		Mockito.when(walkerService.getAllCoach()).thenReturn(coachList);
-//		//Mockito.when(walkerController.getCoachList()).thenReturn(coachList);
-//		assertEquals(coachList.toString(), coachTest);
-//	}
+	@Test
+	public void getCoachListTest(){
+		String coachTest = null;
+		List<String> coachList= new ArrayList<String>();
+		coachList.add("Andrew");
+		Mockito.when(walkerService.getAllCoach()).thenReturn(coachList);
+		coachTest = walkerController.getCoachList();
+		
+		assertEquals(coachList.toString(), coachTest);
+	}
 	
 	@Test
 	public void assignCoachtoUserTest(){
